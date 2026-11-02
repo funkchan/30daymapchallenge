@@ -1,0 +1,6 @@
+# downloaded or generated locally, not committed
+data/raw/
+data/naturalearth/
+data/hackerspaces.geojson
+data/stats.json
+fonts/
