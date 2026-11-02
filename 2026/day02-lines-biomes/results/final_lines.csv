@@ -1,0 +1,8 @@
+biome,km,lat1,lon1,lat2,lon2,pct_inside,bridged_km,country_sequence,source
+Tropical rainforest,3995.5,-4.100264098871156,-80.43620985392167,-2.4470294003581174,-44.52036867626918,100.0,0.0,Ecuador > Peru > Colombia > Brazil,vector-trimmed
+Boreal forest / taiga,5414.3,57.788809240130774,36.0662189864874,53.98993795957136,130.11931609540864,100.0,0.0,Russia,refined (0.01 deg vector raster hill-climb)
+Temperate forest,4542.8,42.61787663736251,-2.894965872609598,56.00891508261225,58.6159711483745,100.0,0.0,Spain > France > Germany > Czech Republic > Germany > Czech Republic > Germany > Czech Republic > Germany > Czech Republic > Germany > Czech Republic > Germany > Czech Republic > Germany > Poland > Belarus > Russia,vector-trimmed
+Desert & xeric shrubland,5614.8,21.224847750191582,-16.838763771183082,19.843895379455954,37.24984518385894,100.0,0.0,Mauritania > Western Sahara > Morocco > Western Sahara > Mauritania > Mali > Algeria > Niger > Libya > Niger > Chad > Libya > Sudan,vector-trimmed
+Grassland & savanna,5806.4,11.76022878369642,-15.309560238556484,14.150929503612863,38.25948061253832,100.0,0.0,Guinea-Bissau > (sea/none) > Guinea-Bissau > Guinea > Mali > Burkina Faso > Mali > Burkina Faso > Niger > Chad > Sudan > Ethiopia > Eritrea > Ethiopia,refined (0.01 deg vector raster hill-climb)
+Tundra,2232.5,65.62170807291604,74.24715553052117,72.40135025706961,129.29627492867897,99.46284691136974,12.0,Russia,vector-trimmed
+Ice sheet (Rock & Ice),4667.0,-70.91731578632792,-9.978623198969597,-65.19254442534081,135.06521814300825,99.97858213750268,1.0,(sea/none) > Antarctica > (sea/none),vector-trimmed

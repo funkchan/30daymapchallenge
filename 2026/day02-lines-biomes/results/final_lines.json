@@ -1,0 +1,148 @@
+[
+ {
+  "code": 1,
+  "biome": "Tropical rainforest",
+  "source": "vector-trimmed",
+  "km": 3995.4752023011715,
+  "lon1": -80.43620985392167,
+  "lat1": -4.100264098871156,
+  "lon2": -44.52036867626918,
+  "lat2": -2.4470294003581174,
+  "pct_inside": 100.0,
+  "bridged_km": 0.0,
+  "bridged": [],
+  "feasibility_km": 3999.474676978149,
+  "feasibility_pct_inside": 99.90002499375156,
+  "country_sequence": "Ecuador > Peru > Colombia > Brazil"
+ },
+ {
+  "code": 2,
+  "biome": "Boreal forest / taiga",
+  "source": "refined (0.01 deg vector raster hill-climb)",
+  "km": 5414.33432579914,
+  "lon1": 36.0662189864874,
+  "lat1": 57.788809240130774,
+  "lon2": 130.11931609540864,
+  "lat2": 53.98993795957136,
+  "pct_inside": 100.0,
+  "bridged_km": 0.0,
+  "bridged": [],
+  "feasibility_km": 5410.401079332867,
+  "feasibility_pct_inside": 99.94456762749445,
+  "country_sequence": "Russia"
+ },
+ {
+  "code": 3,
+  "biome": "Temperate forest",
+  "source": "vector-trimmed",
+  "km": 4542.7633202389125,
+  "lon1": -2.894965872609598,
+  "lat1": 42.61787663736251,
+  "lon2": 58.6159711483745,
+  "lat2": 56.00891508261225,
+  "pct_inside": 100.0,
+  "bridged_km": 0.0,
+  "bridged": [],
+  "feasibility_km": 4549.76295555515,
+  "feasibility_pct_inside": 99.8461876510657,
+  "country_sequence": "Spain > France > Germany > Czech Republic > Germany > Czech Republic > Germany > Czech Republic > Germany > Czech Republic > Germany > Czech Republic > Germany > Czech Republic > Germany > Poland > Belarus > Russia"
+ },
+ {
+  "code": 4,
+  "biome": "Desert & xeric shrubland",
+  "source": "vector-trimmed",
+  "km": 5614.833724929861,
+  "lon1": -16.838763771183082,
+  "lat1": 21.224847750191582,
+  "lon2": 37.24984518385894,
+  "lat2": 19.843895379455954,
+  "pct_inside": 100.0,
+  "bridged_km": 0.0,
+  "bridged": [],
+  "feasibility_km": 5638.833014226087,
+  "feasibility_pct_inside": 99.7872340425532,
+  "country_sequence": "Mauritania > Western Sahara > Morocco > Western Sahara > Mauritania > Mali > Algeria > Niger > Libya > Niger > Chad > Libya > Sudan"
+ },
+ {
+  "code": 5,
+  "biome": "Grassland & savanna",
+  "source": "refined (0.01 deg vector raster hill-climb)",
+  "km": 5806.383389725574,
+  "lon1": -15.309560238556484,
+  "lat1": 11.76022878369642,
+  "lon2": 38.25948061253832,
+  "lat2": 14.150929503612863,
+  "pct_inside": 100.0,
+  "bridged_km": 0.0,
+  "bridged": [],
+  "feasibility_km": 5873.91164517109,
+  "feasibility_pct_inside": 99.18297872340426,
+  "country_sequence": "Guinea-Bissau > (sea/none) > Guinea-Bissau > Guinea > Mali > Burkina Faso > Mali > Burkina Faso > Niger > Chad > Sudan > Ethiopia > Eritrea > Ethiopia"
+ },
+ {
+  "code": 6,
+  "biome": "Tundra",
+  "source": "vector-trimmed",
+  "km": 2232.46553653869,
+  "lon1": 74.24715553052117,
+  "lat1": 65.62170807291604,
+  "lon2": 129.29627492867897,
+  "lat2": 72.40135025706961,
+  "pct_inside": 99.46284691136974,
+  "bridged_km": 12.0,
+  "bridged": [
+   [
+    5.0,
+    72.544,
+    125.07,
+    [
+     "water/none"
+    ]
+   ],
+   [
+    2.0,
+    72.513,
+    126.259,
+    [
+     "water/none"
+    ]
+   ],
+   [
+    5.0,
+    72.505,
+    126.555,
+    [
+     "water/none"
+    ]
+   ]
+  ],
+  "feasibility_km": 2236.464579147805,
+  "feasibility_pct_inside": 99.28507596067918,
+  "country_sequence": "Russia"
+ },
+ {
+  "code": 7,
+  "biome": "Ice sheet (Rock & Ice)",
+  "source": "vector-trimmed",
+  "km": 4667.02565277044,
+  "lon1": -9.978623198969597,
+  "lat1": -70.91731578632792,
+  "lon2": 135.06521814300825,
+  "lat2": -65.19254442534081,
+  "pct_inside": 99.97858213750268,
+  "bridged_km": 1.0,
+  "bridged": [
+   [
+    1.0,
+    -66.095,
+    134.413,
+    [
+     "water/none"
+    ]
+   ]
+  ],
+  "feasibility_km": 4668.025444041383,
+  "feasibility_pct_inside": 99.95717344753747,
+  "country_sequence": "(sea/none) > Antarctica > (sea/none)"
+ }
+]

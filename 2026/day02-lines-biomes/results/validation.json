@@ -1,0 +1,468 @@
+{
+ "Tropical rainforest": {
+  "orig_km": 3999.474676978149,
+  "pct_inside_orig": 99.90002499375156,
+  "trimmed": {
+   "lon1": -80.43620985392167,
+   "lat1": -4.100264098871156,
+   "lon2": -44.52036867626918,
+   "lat2": -2.4470294003581174,
+   "km": 3995.4752023011715,
+   "pct_inside": 100.0,
+   "bridged_km": 0.0,
+   "bridged": []
+  },
+  "all_gaps": [
+   {
+    "i": 3997,
+    "j": 4000,
+    "km": 4.0,
+    "lat": -2.446,
+    "lon": -44.511,
+    "what": {
+     "water/none": 1,
+     "other biome": 3
+    },
+    "eco": [
+     "Amazon-Orinoco-Southern Caribbean mangroves"
+    ]
+   }
+  ]
+ },
+ "Boreal forest / taiga": {
+  "orig_km": 5410.401079332867,
+  "pct_inside_orig": 99.94456762749445,
+  "trimmed": {
+   "lon1": 36.09192364725754,
+   "lat1": 57.80409083017567,
+   "lon2": 130.1343265178574,
+   "lat2": 54.05850319510822,
+   "km": 5407.401411390158,
+   "pct_inside": 100.0,
+   "bridged_km": 0.0,
+   "bridged": []
+  },
+  "all_gaps": [
+   {
+    "i": 5409,
+    "j": 5411,
+    "km": 3.0,
+    "lat": 54.052,
+    "lon": 130.145,
+    "what": {
+     "Tundra": 3
+    },
+    "eco": [
+     "Trans-Baikal Bald Mountain tundra"
+    ]
+   }
+  ]
+ },
+ "Temperate forest": {
+  "orig_km": 4549.76295555515,
+  "pct_inside_orig": 99.8461876510657,
+  "trimmed": {
+   "lon1": -2.894965872609598,
+   "lat1": 42.61787663736251,
+   "lon2": 58.6159711483745,
+   "lat2": 56.00891508261225,
+   "km": 4542.7633202389125,
+   "pct_inside": 100.0,
+   "bridged_km": 0.0,
+   "bridged": []
+  },
+  "all_gaps": [
+   {
+    "i": 0,
+    "j": 2,
+    "km": 3.0,
+    "lat": 42.6,
+    "lon": -2.923,
+    "what": {
+     "other biome": 3
+    },
+    "eco": [
+     "Iberian sclerophyllous and semi-deciduous forests"
+    ]
+   },
+   {
+    "i": 4547,
+    "j": 4550,
+    "km": 4.0,
+    "lat": 56.008,
+    "lon": 58.632,
+    "what": {
+     "Boreal forest / taiga": 4
+    },
+    "eco": [
+     "Urals montane forest and taiga"
+    ]
+   }
+  ]
+ },
+ "Desert & xeric shrubland": {
+  "orig_km": 5638.833014226087,
+  "pct_inside_orig": 99.7872340425532,
+  "trimmed": {
+   "lon1": -16.838763771183082,
+   "lat1": 21.224847750191582,
+   "lon2": 37.24984518385894,
+   "lat2": 19.843895379455954,
+   "km": 5614.833724929861,
+   "pct_inside": 100.0,
+   "bridged_km": 0.0,
+   "bridged": []
+  },
+  "all_gaps": [
+   {
+    "i": 0,
+    "j": 0,
+    "km": 1.0,
+    "lat": 21.195,
+    "lon": -17.048,
+    "what": {
+     "water/none": 1
+    },
+    "eco": []
+   },
+   {
+    "i": 13,
+    "j": 21,
+    "km": 9.0,
+    "lat": 21.212,
+    "lon": -16.924,
+    "what": {
+     "water/none": 9
+    },
+    "eco": []
+   },
+   {
+    "i": 5638,
+    "j": 5639,
+    "km": 2.0,
+    "lat": 19.842,
+    "lon": 37.259,
+    "what": {
+     "water/none": 2
+    },
+    "eco": []
+   }
+  ]
+ },
+ "Grassland & savanna": {
+  "orig_km": 5873.91164517109,
+  "pct_inside_orig": 99.18297872340426,
+  "trimmed": {
+   "lon1": -14.886663401208256,
+   "lat1": 11.876370029754211,
+   "lon2": 38.19138364077435,
+   "lat2": 13.980268745070738,
+   "km": 5752.913465214382,
+   "pct_inside": 100.0,
+   "bridged_km": 0.0,
+   "bridged": []
+  },
+  "all_gaps": [
+   {
+    "i": 5754,
+    "j": 5758,
+    "km": 5.0,
+    "lat": 13.98,
+    "lon": 38.201,
+    "what": {
+     "other biome": 5
+    },
+    "eco": [
+     "Ethiopian montane grasslands and woodlands"
+    ]
+   },
+   {
+    "i": 5778,
+    "j": 5785,
+    "km": 8.0,
+    "lat": 13.963,
+    "lon": 38.422,
+    "what": {
+     "other biome": 8
+    },
+    "eco": [
+     "Ethiopian montane grasslands and woodlands"
+    ]
+   },
+   {
+    "i": 5790,
+    "j": 5792,
+    "km": 3.0,
+    "lat": 13.955,
+    "lon": 38.533,
+    "what": {
+     "other biome": 3
+    },
+    "eco": [
+     "Ethiopian montane grasslands and woodlands"
+    ]
+   },
+   {
+    "i": 5798,
+    "j": 5806,
+    "km": 9.0,
+    "lat": 13.95,
+    "lon": 38.607,
+    "what": {
+     "other biome": 9
+    },
+    "eco": [
+     "Ethiopian montane grasslands and woodlands"
+    ]
+   },
+   {
+    "i": 5810,
+    "j": 5810,
+    "km": 1.0,
+    "lat": 13.942,
+    "lon": 38.717,
+    "what": {
+     "other biome": 1
+    },
+    "eco": [
+     "Ethiopian montane grasslands and woodlands"
+    ]
+   },
+   {
+    "i": 5813,
+    "j": 5817,
+    "km": 5.0,
+    "lat": 13.94,
+    "lon": 38.745,
+    "what": {
+     "other biome": 5
+    },
+    "eco": [
+     "Ethiopian montane grasslands and woodlands"
+    ]
+   },
+   {
+    "i": 5820,
+    "j": 5824,
+    "km": 5.0,
+    "lat": 13.935,
+    "lon": 38.81,
+    "what": {
+     "other biome": 5
+    },
+    "eco": [
+     "Ethiopian montane grasslands and woodlands"
+    ]
+   },
+   {
+    "i": 5831,
+    "j": 5835,
+    "km": 5.0,
+    "lat": 13.927,
+    "lon": 38.911,
+    "what": {
+     "other biome": 5
+    },
+    "eco": [
+     "Ethiopian montane grasslands and woodlands"
+    ]
+   },
+   {
+    "i": 5840,
+    "j": 5842,
+    "km": 3.0,
+    "lat": 13.921,
+    "lon": 38.994,
+    "what": {
+     "other biome": 3
+    },
+    "eco": [
+     "Ethiopian montane grasslands and woodlands"
+    ]
+   },
+   {
+    "i": 5853,
+    "j": 5855,
+    "km": 3.0,
+    "lat": 13.912,
+    "lon": 39.114,
+    "what": {
+     "other biome": 3
+    },
+    "eco": [
+     "Ethiopian montane grasslands and woodlands"
+    ]
+   },
+   {
+    "i": 5874,
+    "j": 5874,
+    "km": 1.0,
+    "lat": 13.897,
+    "lon": 39.308,
+    "what": {
+     "other biome": 1
+    },
+    "eco": [
+     "Ethiopian montane grasslands and woodlands"
+    ]
+   }
+  ]
+ },
+ "Tundra": {
+  "orig_km": 2236.464579147805,
+  "pct_inside_orig": 99.28507596067918,
+  "trimmed": {
+   "lon1": 74.24715553052117,
+   "lat1": 65.62170807291604,
+   "lon2": 129.29627492867897,
+   "lat2": 72.40135025706961,
+   "km": 2232.46553653869,
+   "pct_inside": 99.46284691136974,
+   "bridged_km": 12.0,
+   "bridged": [
+    {
+     "i": 2093,
+     "j": 2097,
+     "km": 5.0,
+     "lat": 72.544,
+     "lon": 125.07,
+     "what": {
+      "water/none": 5
+     },
+     "eco": []
+    },
+    {
+     "i": 2133,
+     "j": 2134,
+     "km": 2.0,
+     "lat": 72.513,
+     "lon": 126.259,
+     "what": {
+      "water/none": 2
+     },
+     "eco": []
+    },
+    {
+     "i": 2143,
+     "j": 2147,
+     "km": 5.0,
+     "lat": 72.505,
+     "lon": 126.555,
+     "what": {
+      "water/none": 5
+     },
+     "eco": []
+    }
+   ]
+  },
+  "all_gaps": [
+   {
+    "i": 0,
+    "j": 2,
+    "km": 3.0,
+    "lat": 65.603,
+    "lon": 74.2,
+    "what": {
+     "Boreal forest / taiga": 3
+    },
+    "eco": [
+     "West Siberian taiga"
+    ]
+   },
+   {
+    "i": 2093,
+    "j": 2097,
+    "km": 5.0,
+    "lat": 72.544,
+    "lon": 125.07,
+    "what": {
+     "water/none": 5
+    },
+    "eco": []
+   },
+   {
+    "i": 2133,
+    "j": 2134,
+    "km": 2.0,
+    "lat": 72.513,
+    "lon": 126.259,
+    "what": {
+     "water/none": 2
+    },
+    "eco": []
+   },
+   {
+    "i": 2143,
+    "j": 2147,
+    "km": 5.0,
+    "lat": 72.505,
+    "lon": 126.555,
+    "what": {
+     "water/none": 5
+    },
+    "eco": []
+   },
+   {
+    "i": 2237,
+    "j": 2237,
+    "km": 1.0,
+    "lat": 72.4,
+    "lon": 129.326,
+    "what": {
+     "water/none": 1
+    },
+    "eco": []
+   }
+  ]
+ },
+ "Ice sheet (Rock & Ice)": {
+  "orig_km": 4668.025444041383,
+  "pct_inside_orig": 99.95717344753747,
+  "trimmed": {
+   "lon1": -9.978623198969597,
+   "lat1": -70.91731578632792,
+   "lon2": 135.06521814300825,
+   "lat2": -65.19254442534081,
+   "km": 4667.02565277044,
+   "pct_inside": 99.97858213750268,
+   "bridged_km": 1.0,
+   "bridged": [
+    {
+     "i": 4564,
+     "j": 4564,
+     "km": 1.0,
+     "lat": -66.095,
+     "lon": 134.413,
+     "what": {
+      "water/none": 1
+     },
+     "eco": []
+    }
+   ]
+  },
+  "all_gaps": [
+   {
+    "i": 0,
+    "j": 0,
+    "km": 1.0,
+    "lat": -70.909,
+    "lon": -9.988,
+    "what": {
+     "water/none": 1
+    },
+    "eco": []
+   },
+   {
+    "i": 4564,
+    "j": 4564,
+    "km": 1.0,
+    "lat": -66.095,
+    "lon": 134.413,
+    "what": {
+     "water/none": 1
+    },
+    "eco": []
+   }
+  ]
+ }
+}
