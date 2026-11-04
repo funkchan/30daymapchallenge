@@ -2,7 +2,7 @@ import matplotlib.transforms as mt
 from pirate import *
 W,H=2400,3000;fig=plt.figure(figsize=(24,30),dpi=100);fig.patch.set_facecolor(PARCH)
 BX=(-76.75,34.35,-74.9,36.95)
-MW,MH=2320,2560
+MW,MH=2320,2540
 ax=fig.add_axes([40/W,1-2850/H,MW/W,MH/H])
 kp=gpd.GeoSeries(gpd.points_from_xy([-76.15,-76.75,-76.2],[37.02,34.5,35.5]),crs=4326).to_crs(E)
 y0=kp.y.min()-12000;y1=kp.y.max()+42000;wx=kp.x.min()-26000;wid=(y1-y0)*MW/MH
@@ -37,7 +37,7 @@ big=C.n.idxmax()
 pirate.pts=P[(P.cl>=0)&(P.cl!=big)]
 basemap(ia,ei,gly=.8,cg_=C[inI],counts=False,**kw)
 bp=P[P.cl==big];ia.scatter(bp.geometry.x,bp.geometry.y,s=170*1.3,marker='+',c=OX,lw=3,alpha=.28,zorder=5)
-OFF={11:(70,55),23:(-95,-30),82:(0,-22)}
+OFF={11:(70,55),23:(-95,-30),82:(0,-22),8:(45,50)}
 for k_,r_ in C[inI].iterrows():
     dx_,dy_=OFF.get(int(r_.n),(0,-18))
     ia.annotate(f'{int(r_.n)}',(r_.geometry.x,r_.geometry.y),xytext=(dx_,dy_),textcoords='offset points',ha='center',va='top' if dy_<=0 else 'bottom',fontsize=24,family=NUM,fontweight='bold',color=BLK,zorder=9,
@@ -128,8 +128,8 @@ for r in a.itertuples():
         if axb.contains(bb.x0,bb.y0) and axb.contains(bb.x1,bb.y1) and not any(bb.overlaps(o) for o in placed+gb):
             placed.append(bb);nl+=1;break
         tx.remove()
-fig.text(40/W,1-30/H,'Graveyards of the Atlantic',fontsize=110,family=TITLE,color=OX,va='top')
-fig.text(44/W,1-175/H,'Chesapeake to Cape Lookout: one tight cluster, one scattered graveyard',fontsize=44,family=LAB,color=BLK,va='top')
+fig.text(40/W,1-16/H,'Graveyards of the Atlantic',fontsize=110,family=TITLE,color=OX,va='top')
+fig.text(44/W,1-232/H,'Chesapeake to Cape Lookout: one tight cluster, one scattered graveyard',fontsize=44,family=LAB,color=BLK,va='top')
 fig.text(40/W,1-2862/H,f'Methods: {tot:,} wrecks in frame · glow = wreck density, Gaussian KDE 5 km (hidden beyond 200 m depth) · clusters = regional DBSCAN, eps 5 km, min 6 (EPSG:5070) · hull = convex hull + 1.5 km',fontsize=19,family=NUM,color=BLK,va='top')
 fig.text(40/W,1-2905/H,'Data: NOAA Office of Coast Survey (ENC, AWOIS) · NOAA ONMS · NOAA NCEI (CRM, ETOPO 2022) · Natural Earth · US Census Bureau',fontsize=22,family=NUM,color=BLK,va='top')
 fig.text(40/W,1-2945/H,'Map: @funkchan · #30DayMapChallenge Day 4: Clusters',fontsize=22,family=NUM,color=OX,va='top',fontweight='bold')
@@ -201,6 +201,17 @@ for t in ax.texts:
         if k: print('BOX COVERS',k,repr(t.get_text()[:20]))
 cx,cy=ax.transAxes.transform((cb[1],cb[2]));r=.07*axb.width
 print('compass covers',(np.hypot(px[:,0]-cx,px[:,1]-cy)<r).sum())
+fig.canvas.draw();_r=fig.canvas.get_renderer()
+_cl=set(cl_);_oth=[t for t in ax.texts if t not in _cl]
+for t in list(cl_):
+    b_=t.get_window_extent(_r)
+    if any(b_.overlaps(o.get_bbox_patch().get_window_extent(_r) if o.get_bbox_patch() else o.get_window_extent(_r)) for o in _oth):t.remove();print('drop isobath label',t.get_text())
+_t=fig.texts[0].get_window_extent(_r);_s=fig.texts[1].get_window_extent(_r);print('HEADER title bottom px',H-_t.y0,'subtitle top px',H-_s.y1,'gap',_s.y1 and _t.y0-_s.y1,'subtitle bottom',H-_s.y0,'map top',H-ax.get_window_extent().y1)
+_all=[t for t in fig.texts]+[t for a_ in fig.axes for t in a_.texts if t.get_visible() and t.get_text().strip() and t.axes is not None]
+_bb=[(t,(t.get_bbox_patch().get_window_extent(_r) if t.get_bbox_patch() else t.get_window_extent(_r))) for t in _all]
+for i in range(len(_bb)):
+  for j in range(i+1,len(_bb)):
+    if _bb[i][1].overlaps(_bb[j][1]):print('OVERLAP',repr(_bb[i][0].get_text()[:25]),repr(_bb[j][0].get_text()[:25]))
 fig.savefig('outputs/day04_final_v4.png',dpi=100,facecolor=PARCH)
 from PIL import Image;Image.open('outputs/day04_final_v4.png').resize((1200,1500),Image.LANCZOS).save('outputs/day04_final_v4_1200.png')
 print(tot,ob,nl,len(a))
