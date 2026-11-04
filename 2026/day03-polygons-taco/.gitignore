@@ -1,0 +1,7 @@
+# downloaded or generated locally, not committed
+data/
+work/
+fonts/
+__pycache__/
+*.pyc
+*.pkl

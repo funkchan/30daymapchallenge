@@ -1,0 +1,777 @@
+{
+ "canvas": {
+  "width": 2400,
+  "height": 3000,
+  "background": "#F3EDE0",
+  "units": "px",
+  "y_axis": "down"
+ },
+ "notes": "Each path in final/<n>_<ingredient>.svg is in canvas px at its (first) ASSEMBLED position (identity transform). EXPLODED = the SVG matrix given, applied to the same path (protein/tomato/onion: one matrix per piece, in path subpath order, because those pieces are rearranged in the assembled taco). Shapes are sized to read as a taco, NOT to true scale; true_area_km2 and metres_per_px_* record the real size. Stack order 1 = bottom. The assembled taco is drawn from assembled_taco.draw_list, NOT in stack order.",
+ "assembled_taco": {
+  "tilt_deg": 3,
+  "tilt_note": "whole taco rotated 3 deg counter-clockwise on screen; all outlines undistorted (uniform scale + rotation only)",
+  "shell_width_px": 1080,
+  "lettuce_peek": "15.0% of shell height beyond the front arc",
+  "back_wall_offset_px": [
+   -97.2,
+   -32.4
+  ],
+  "draw_list": [
+   {
+    "item": "cast shadow (derived, flat)",
+    "mask_svg": "final/standalone/cast_shadow.svg",
+    "transform": null,
+    "flat_fill": "#E4DCCB",
+    "tile": null,
+    "stroke": false
+   },
+   {
+    "item": "shell #2 = back wall (real Wainwright copy, offset up-left)",
+    "mask_svg": "final/standalone/shell_back.svg",
+    "transform": null,
+    "tile": "shell_back",
+    "stroke": false
+   },
+   {
+    "item": "ground beef (whole Chonos inside the shell; shows at the left open end)",
+    "mask_svg": "final/standalone/protein.svg",
+    "transform": null,
+    "tile": "protein",
+    "stroke": false
+   },
+   {
+    "item": "lettuce #1 (peeks over the arc)",
+    "mask_svg": "final/standalone/lettuce.svg",
+    "transform": null,
+    "tile": "lettuce",
+    "stroke": false
+   },
+   {
+    "item": "lettuce #2 (peeks over the arc)",
+    "mask_svg": "final/standalone/lettuce.svg",
+    "transform": "matrix(1.16507,0.06106,-0.06106,1.16507,112.82,-254.584)",
+    "tile": "lettuce",
+    "stroke": false
+   },
+   {
+    "item": "cheese #1 (tucked along the rim)",
+    "mask_svg": "final/standalone/cheese.svg",
+    "transform": null,
+    "tile": "cheese",
+    "stroke": 1.2
+   },
+   {
+    "item": "lettuce #3 (peeks over the arc)",
+    "mask_svg": "final/standalone/lettuce.svg",
+    "transform": "matrix(0.96721,0.65239,-0.65239,0.96721,774.535,-356.054)",
+    "tile": "lettuce",
+    "stroke": false
+   },
+   {
+    "item": "lettuce #4 (peeks over the arc)",
+    "mask_svg": "final/standalone/lettuce.svg",
+    "transform": "matrix(0.85325,0.79566,-0.79566,0.85325,1075.36,-341.166)",
+    "tile": "lettuce",
+    "stroke": false
+   },
+   {
+    "item": "lettuce #5 (peeks over the arc)",
+    "mask_svg": "final/standalone/lettuce.svg",
+    "transform": "matrix(0.37983,1.10311,-1.10311,0.37983,1601.35,-46.5657)",
+    "tile": "lettuce",
+    "stroke": false
+   },
+   {
+    "item": "cheese #2 (tucked along the rim)",
+    "mask_svg": "final/standalone/cheese.svg",
+    "transform": "matrix(0.61566,0.78801,-0.78801,0.61566,1101.48,-157.419)",
+    "tile": "cheese",
+    "stroke": 1.2
+   },
+   {
+    "item": "lettuce #6 (peeks over the arc)",
+    "mask_svg": "final/standalone/lettuce.svg",
+    "transform": "matrix(0.28224,1.13201,-1.13201,0.28224,1800.19,87.047)",
+    "tile": "lettuce",
+    "stroke": false
+   },
+   {
+    "item": "lettuce #7 (peeks over the arc)",
+    "mask_svg": "final/standalone/lettuce.svg",
+    "transform": "matrix(-0.17365,0.98481,-0.98481,-0.17365,1914.05,539.552)",
+    "tile": "lettuce",
+    "stroke": false
+   },
+   {
+    "item": "shell #1 = front wall (the real Wainwright outline)",
+    "mask_svg": "final/standalone/shell_front.svg",
+    "transform": null,
+    "tile": "shell",
+    "stroke": false
+   },
+   {
+    "item": "cheese #3 (draped along the rim)",
+    "mask_svg": "final/standalone/cheese.svg",
+    "transform": "matrix(0.95106,-0.30902,0.30902,0.95106,-285.816,277.323)",
+    "tile": "cheese",
+    "stroke": 1.2
+   },
+   {
+    "item": "cheese #4 (draped along the rim)",
+    "mask_svg": "final/standalone/cheese.svg",
+    "transform": "matrix(0.35837,0.93358,-0.93358,0.35837,1434,10.8103)",
+    "tile": "cheese",
+    "stroke": 1.2
+   },
+   {
+    "item": "tomato dice",
+    "mask_svg": "final/standalone/tomato.svg",
+    "transform": null,
+    "tile": "tomato",
+    "stroke": false
+   },
+   {
+    "item": "tomato extra dice (repeats of 2 real counties)",
+    "mask_svg": "final/standalone/tomato_extra.svg",
+    "transform": null,
+    "tile": "tomato",
+    "stroke": false
+   },
+   {
+    "item": "onion dice",
+    "mask_svg": "final/standalone/onion.svg",
+    "transform": null,
+    "tile": "onion",
+    "stroke": 1.5
+   },
+   {
+    "item": "onion extra die (repeat of 1 real department)",
+    "mask_svg": "final/standalone/onion_extra.svg",
+    "transform": null,
+    "tile": "onion",
+    "stroke": 1.5
+   },
+   {
+    "item": "cilantro #1",
+    "mask_svg": "final/standalone/cilantro.svg",
+    "transform": null,
+    "tile": "cilantro",
+    "stroke": false
+   },
+   {
+    "item": "cilantro #2",
+    "mask_svg": "final/standalone/cilantro.svg",
+    "transform": "matrix(0.82904,0.55919,-0.55919,0.82904,600.928,-198.739)",
+    "tile": "cilantro",
+    "stroke": false
+   },
+   {
+    "item": "cilantro #3",
+    "mask_svg": "final/standalone/cilantro.svg",
+    "transform": "matrix(0.80902,0.58779,-0.58779,0.80902,1183.91,-206.745)",
+    "tile": "cilantro",
+    "stroke": false
+   },
+   {
+    "item": "cilantro #4",
+    "mask_svg": "final/standalone/cilantro.svg",
+    "transform": "matrix(0.34202,0.93969,-0.93969,0.34202,1721.87,195.147)",
+    "tile": "cilantro",
+    "stroke": false
+   },
+   {
+    "item": "sour cream (crown)",
+    "mask_svg": "final/standalone/sour_cream.svg",
+    "transform": null,
+    "tile": "sour_cream",
+    "stroke": true
+   }
+  ],
+  "derived_masks": {
+   "cast_shadow": "flat #E4DCCB: front+back shell silhouette squashed onto the ground (not a place)",
+   "shell_front": "front wall = the full real Wainwright outline (identical to standalone/shell.svg)"
+  },
+  "repeats_note": "Assembled taco repeats: shell x2 (front + back wall), lettuce x7, cheese x4, cilantro x4 (same outline, same scale; transforms in ingredients[].assembled.repeats). The exploded stack keeps exactly one shape per ingredient; repeat counts show only on labels.",
+  "pieces_note": "Beef: Chonos cut into 8 latitude bands by island centroid; each band moved and turned as a rigid group (one uniform scale, in-band arrangement and outlines unchanged) and packed into the left open end, where its islands show as crumbs (the rest is hidden by the front wall). Tomato/onion: each county/department moved and turned (+/-50 deg, +/-10% size) as a die on the lettuce. Exploded stack shows original arrangements.",
+  "enclosed_cream_px2": 244.1,
+  "extra_dice": {
+   "tomato": {
+    "piece_index": [
+     0,
+     3
+    ],
+    "mask_svg": "final/standalone/tomato_extra.svg",
+    "note": "repeats of real pieces, assembled view only; stack and labels unchanged"
+   },
+   "onion": {
+    "piece_index": [
+     2
+    ],
+    "mask_svg": "final/standalone/onion_extra.svg",
+    "note": "repeats of real pieces, assembled view only; stack and labels unchanged"
+   }
+  },
+  "bbox": [
+   85.6,
+   346.5,
+   1314.4,
+   1139.2
+  ]
+ },
+ "guide_axis": {
+  "x": 1500,
+  "y_top": 346.5494543890213,
+  "y_bottom": 2800
+ },
+ "label_column_x": 1905,
+ "ingredients": [
+  {
+   "id": "shell",
+   "stack_order": 1,
+   "label": "Taco shell",
+   "place": "Wainwright city, Alaska",
+   "country": "United States",
+   "display_place": "Wainwright city, Alaska, United States",
+   "admin_level": "place (city)",
+   "true_area_km2": 37.3,
+   "n_pieces": 1,
+   "source": "US Census Bureau TIGER/Line cartographic boundary places 2023, 1:500k",
+   "source_id": "0282750",
+   "licence": "Public domain (US Census Bureau)",
+   "rotation_ccw_deg_from_north": 126.2,
+   "metres_per_px_assembled": 8.9,
+   "metres_per_px_exploded": 13.8,
+   "svg": "final/1_shell.svg",
+   "standalone_svg": "final/standalone/shell.svg",
+   "assembled": {
+    "transform": "matrix(1,0,0,1,0,0)",
+    "bbox": [
+     184.3,
+     501.4,
+     1262.9,
+     1089.9
+    ],
+    "repeat_count": 2,
+    "repeats": [
+     "matrix(1,-0,-0,1,-98.7625,-27.2685)"
+    ]
+   },
+   "exploded": {
+    "transform": "matrix(0.64234,0.03366,-0.03366,0.64234,1070.14,2057.6)",
+    "matrix_abcdef": [
+     0.64234,
+     0.03366,
+     -0.03366,
+     0.64234,
+     1070.14211,
+     2057.60089
+    ],
+    "bbox": [
+     1152.7,
+     2404.0,
+     1847.3,
+     2800.0
+    ]
+   },
+   "leader": {
+    "anchor_on_shape": [
+     1824.2,
+     2602.0
+    ],
+    "elbow": [
+     1865,
+     2602.0
+    ],
+    "label_anchor": [
+     1905,
+     2602.0
+    ]
+   }
+  },
+  {
+   "id": "protein",
+   "stack_order": 2,
+   "label": "Ground beef",
+   "place": "Chonos Archipelago",
+   "country": "Chile",
+   "display_place": "Chonos Archipelago, Chile",
+   "admin_level": "island group (constructed)",
+   "true_area_km2": 2451.7,
+   "n_pieces": 20,
+   "source": "Natural Earth 10m land + minor islands (constructed island cluster)",
+   "source_id": "NE-protein-beef_aisen",
+   "licence": "Public domain (Natural Earth)",
+   "rotation_ccw_deg_from_north": 0.0,
+   "metres_per_px_assembled": 240.1,
+   "metres_per_px_exploded": 436.5,
+   "svg": "final/2_protein.svg",
+   "standalone_svg": "final/standalone/protein.svg",
+   "assembled": {
+    "transform": "matrix(1,0,0,1,0,0)",
+    "bbox": [
+     108.7,
+     616.6,
+     805.2,
+     1024.5
+    ],
+    "repeat_count": 1,
+    "repeats": []
+   },
+   "exploded": {
+    "transform": null,
+    "per_piece_transforms": [
+     "matrix(-0.11435,-0.53798,0.53798,-0.11435,1089.76,2385.65)",
+     "matrix(0.02878,-0.54925,0.54925,0.02878,1043.62,2291.49)",
+     "matrix(-0.11435,-0.53798,0.53798,-0.11435,1191.59,2296.45)",
+     "matrix(-0.11435,-0.53798,0.53798,-0.11435,1065.21,2261.49)",
+     "matrix(0.54925,0.02878,-0.02878,0.54925,1162.09,1764.9)",
+     "matrix(0.40873,-0.36802,0.36802,0.40873,1085.73,1844.33)",
+     "matrix(-0.11435,-0.53798,0.53798,-0.11435,1191.59,2296.45)",
+     "matrix(-0.24969,-0.49005,0.49005,-0.24969,1141.91,2354.28)",
+     "matrix(-0.24969,-0.49005,0.49005,-0.24969,1141.91,2354.28)",
+     "matrix(0.54925,0.02878,-0.02878,0.54925,1162.09,1764.9)",
+     "matrix(-0.11435,-0.53798,0.53798,-0.11435,1191.59,2296.45)",
+     "matrix(-0.11435,-0.53798,0.53798,-0.11435,1015.97,2310.51)",
+     "matrix(0.54925,0.02878,-0.02878,0.54925,1162.09,1764.9)",
+     "matrix(-0.11435,-0.53798,0.53798,-0.11435,1015.97,2310.51)",
+     "matrix(0.40873,-0.36802,0.36802,0.40873,1085.73,1844.33)",
+     "matrix(-0.24969,-0.49005,0.49005,-0.24969,1141.91,2354.28)",
+     "matrix(-0.11435,-0.53798,0.53798,-0.11435,1065.21,2261.49)",
+     "matrix(0.02878,-0.54925,0.54925,0.02878,1043.62,2291.49)",
+     "matrix(-0.11435,-0.53798,0.53798,-0.11435,1089.76,2385.65)",
+     "matrix(-0.11435,-0.53798,0.53798,-0.11435,1089.76,2385.65)"
+    ],
+    "standalone_svg": "final/standalone/protein_exploded.svg",
+    "bbox": [
+     1387.7,
+     2021.5,
+     1612.3,
+     2258.0
+    ]
+   },
+   "leader": {
+    "anchor_on_shape": [
+     1607.8,
+     2139.8
+    ],
+    "elbow": [
+     1865,
+     2139.8
+    ],
+    "label_anchor": [
+     1905,
+     2139.8
+    ]
+   }
+  },
+  {
+   "id": "lettuce",
+   "stack_order": 3,
+   "label": "Shredded lettuce",
+   "place": "Iceland",
+   "country": "Iceland",
+   "display_place": "Iceland",
+   "admin_level": "island",
+   "true_area_km2": 102363.5,
+   "n_pieces": 1,
+   "source": "Natural Earth 10m land, named by geography_regions_polys",
+   "source_id": "NE-isl-231",
+   "licence": "Public domain (Natural Earth)",
+   "rotation_ccw_deg_from_north": 350.0,
+   "metres_per_px_assembled": 1918.0,
+   "metres_per_px_exploded": 1629.6,
+   "svg": "final/3_lettuce.svg",
+   "standalone_svg": "final/standalone/lettuce.svg",
+   "assembled": {
+    "transform": "matrix(1,0,0,1,0,0)",
+    "bbox": [
+     140.5,
+     640.8,
+     375.8,
+     882.8
+    ],
+    "repeat_count": 7,
+    "repeats": [
+     "matrix(1.16507,0.06106,-0.06106,1.16507,112.82,-254.584)",
+     "matrix(0.96721,0.65239,-0.65239,0.96721,774.535,-356.054)",
+     "matrix(0.85325,0.79566,-0.79566,0.85325,1075.36,-341.166)",
+     "matrix(0.37983,1.10311,-1.10311,0.37983,1601.35,-46.5657)",
+     "matrix(0.28224,1.13201,-1.13201,0.28224,1800.19,87.047)",
+     "matrix(-0.17365,0.98481,-0.98481,-0.17365,1914.05,539.552)"
+    ]
+   },
+   "exploded": {
+    "transform": "matrix(0.75658,0.90165,-0.90165,0.75658,1985.65,939.093)",
+    "matrix_abcdef": [
+     0.75658,
+     0.90165,
+     -0.90165,
+     0.75658,
+     1985.65415,
+     939.09345
+    ],
+    "bbox": [
+     1347.5,
+     1644.5,
+     1652.5,
+     1875.5
+    ]
+   },
+   "leader": {
+    "anchor_on_shape": [
+     1657.6,
+     1760.0
+    ],
+    "elbow": [
+     1865,
+     1760.0
+    ],
+    "label_anchor": [
+     1905,
+     1760.0
+    ]
+   }
+  },
+  {
+   "id": "cheese",
+   "stack_order": 4,
+   "label": "Shredded cheese",
+   "place": "Zadar islands (Dugi Otok, Ugljan, Pašman…)",
+   "country": "Croatia",
+   "display_place": "Zadar islands (Dugi Otok, Ugljan, Pašman…), Croatia",
+   "admin_level": "island group (constructed)",
+   "true_area_km2": 264.5,
+   "n_pieces": 5,
+   "source": "Natural Earth 10m land (constructed island bundle)",
+   "source_id": "NE-land-bundle-371",
+   "licence": "Public domain (Natural Earth)",
+   "rotation_ccw_deg_from_north": 250.2,
+   "metres_per_px_assembled": 352.3,
+   "metres_per_px_exploded": 310.8,
+   "svg": "final/4_cheese.svg",
+   "standalone_svg": "final/standalone/cheese.svg",
+   "assembled": {
+    "transform": "matrix(1,0,0,1,0,0)",
+    "bbox": [
+     354.3,
+     493.9,
+     455.0,
+     647.5
+    ],
+    "repeat_count": 4,
+    "repeats": [
+     "matrix(0.61566,0.78801,-0.78801,0.61566,1101.48,-157.419)",
+     "matrix(0.95106,-0.30902,0.30902,0.95106,-285.816,277.323)",
+     "matrix(0.35837,0.93358,-0.93358,0.35837,1434,10.8103)"
+    ]
+   },
+   "exploded": {
+    "transform": "matrix(0.9399,0.63397,-0.63397,0.9399,1484.25,640.554)",
+    "matrix_abcdef": [
+     0.9399,
+     0.63397,
+     -0.63397,
+     0.9399,
+     1484.24638,
+     640.55382
+    ],
+    "bbox": [
+     1408.2,
+     1388.5,
+     1591.8,
+     1498.5
+    ]
+   },
+   "leader": {
+    "anchor_on_shape": [
+     1567.7,
+     1443.5
+    ],
+    "elbow": [
+     1865,
+     1443.5
+    ],
+    "label_anchor": [
+     1905,
+     1443.5
+    ]
+   }
+  },
+  {
+   "id": "tomato",
+   "stack_order": 5,
+   "label": "Diced tomato",
+   "place": "Six NW Iowa counties",
+   "country": "United States",
+   "display_place": "Six NW Iowa counties, United States",
+   "admin_level": "ADM2 (county) cluster",
+   "true_area_km2": 8933.4,
+   "n_pieces": 6,
+   "source": "geoBoundaries CGAZ ADM2 (cluster of units)",
+   "source_id": "52423323B23410218305479;52423323B32669676915102;52423323B36329758644763;52423323B93733047686760;52423323B21865505270884;52423323B82906580744491",
+   "licence": "Public domain (gbOpen USA: US Census Bureau TIGER)",
+   "rotation_ccw_deg_from_north": 0.0,
+   "metres_per_px_assembled": 673.8,
+   "metres_per_px_exploded": 999.9,
+   "svg": "final/5_tomato.svg",
+   "standalone_svg": "final/standalone/tomato.svg",
+   "assembled": {
+    "transform": "matrix(1,0,0,1,0,0)",
+    "bbox": [
+     272.0,
+     420.6,
+     1192.0,
+     727.9
+    ],
+    "repeat_count": 1,
+    "repeats": []
+   },
+   "exploded": {
+    "transform": null,
+    "per_piece_transforms": [
+     "matrix(0.67253,0.04336,-0.04336,0.67253,788.127,688.875)",
+     "matrix(0.54623,0.36996,-0.36996,0.54623,1390.46,755.492)",
+     "matrix(0.67077,-0.02165,0.02165,0.67077,781.272,825.854)",
+     "matrix(0.67435,0.19064,-0.19064,0.67435,898.936,713.37)",
+     "matrix(0.69241,0.04256,-0.04256,0.69241,1023.73,881.431)",
+     "matrix(0.65716,-0.17074,0.17074,0.65716,1139.09,776.467)"
+    ],
+    "standalone_svg": "final/standalone/tomato_exploded.svg",
+    "bbox": [
+     1439.5,
+     1164.0,
+     1560.5,
+     1242.5
+    ]
+   },
+   "leader": {
+    "anchor_on_shape": [
+     1568.5,
+     1203.3
+    ],
+    "elbow": [
+     1865,
+     1203.3
+    ],
+    "label_anchor": [
+     1905,
+     1203.3
+    ]
+   }
+  },
+  {
+   "id": "onion",
+   "stack_order": 6,
+   "label": "Diced onion",
+   "place": "Five La Pampa departments",
+   "country": "Argentina",
+   "display_place": "Five La Pampa departments, Argentina",
+   "admin_level": "ADM2 (department) cluster",
+   "true_area_km2": 12562.6,
+   "n_pieces": 5,
+   "source": "geoBoundaries CGAZ ADM2 (cluster of units)",
+   "source_id": "61730980B39039474647755;61730980B51204300351665;61730980B60690576919105;61730980B1153371895886;61730980B17447660038504",
+   "licence": "CC BY 3.0 IGO (gbOpen ARG: Instituto Geográfico Nacional, UNHCR, OCHA)",
+   "rotation_ccw_deg_from_north": 90.0,
+   "metres_per_px_assembled": 992.3,
+   "metres_per_px_exploded": 2046.4,
+   "svg": "final/6_onion.svg",
+   "standalone_svg": "final/standalone/onion.svg",
+   "assembled": {
+    "transform": "matrix(1,0,0,1,0,0)",
+    "bbox": [
+     315.2,
+     450.1,
+     1177.7,
+     660.3
+    ],
+    "repeat_count": 1,
+    "repeats": []
+   },
+   "exploded": {
+    "transform": null,
+    "per_piece_transforms": [
+     "matrix(0.47539,0.09562,-0.09562,0.47539,1334.71,702.124)",
+     "matrix(0.38949,-0.19337,0.19337,0.38949,1177.8,911.254)",
+     "matrix(0.40809,0.15132,-0.15132,0.40809,1169.53,661.187)",
+     "matrix(0.2918,0.27841,-0.27841,0.2918,1609.75,700.173)",
+     "matrix(0.33402,-0.34556,0.34556,0.33402,866.735,1171.72)"
+    ],
+    "standalone_svg": "final/standalone/onion_exploded.svg",
+    "bbox": [
+     1448.3,
+     968.5,
+     1551.7,
+     1018.0
+    ]
+   },
+   "leader": {
+    "anchor_on_shape": [
+     1559.7,
+     993.3
+    ],
+    "elbow": [
+     1865,
+     993.3
+    ],
+    "label_anchor": [
+     1905,
+     993.3
+    ]
+   }
+  },
+  {
+   "id": "cilantro",
+   "stack_order": 7,
+   "label": "Cilantro",
+   "place": "Halmahera",
+   "country": "Indonesia",
+   "display_place": "Halmahera, Indonesia",
+   "admin_level": "island",
+   "true_area_km2": 18213.8,
+   "n_pieces": 1,
+   "source": "Natural Earth 10m land, named by geography_regions_polys",
+   "source_id": "NE-isl-180",
+   "licence": "Public domain (Natural Earth)",
+   "rotation_ccw_deg_from_north": 0.0,
+   "metres_per_px_assembled": 2795.1,
+   "metres_per_px_exploded": 1896.2,
+   "svg": "final/7_cilantro.svg",
+   "standalone_svg": "final/standalone/cilantro.svg",
+   "assembled": {
+    "transform": "matrix(1,0,0,1,0,0)",
+    "bbox": [
+     178.8,
+     626.1,
+     271.4,
+     717.0
+    ],
+    "repeat_count": 4,
+    "repeats": [
+     "matrix(0.82904,0.55919,-0.55919,0.82904,600.928,-198.739)",
+     "matrix(0.80902,0.58779,-0.58779,0.80902,1183.91,-206.745)",
+     "matrix(0.34202,0.93969,-0.93969,0.34202,1721.87,195.147)"
+    ]
+   },
+   "exploded": {
+    "transform": "matrix(1.16157,0.90752,-0.90752,1.16157,1849.39,-252.483)",
+    "matrix_abcdef": [
+     1.16157,
+     0.90752,
+     -0.90752,
+     1.16157,
+     1849.38934,
+     -252.48324
+    ],
+    "bbox": [
+     1455.9,
+     641.0,
+     1544.1,
+     822.5
+    ]
+   },
+   "leader": {
+    "anchor_on_shape": [
+     1520.3,
+     731.8
+    ],
+    "elbow": [
+     1865,
+     731.8
+    ],
+    "label_anchor": [
+     1905,
+     731.8
+    ]
+   }
+  },
+  {
+   "id": "sour_cream",
+   "stack_order": 8,
+   "label": "Sour cream",
+   "place": "Montalbán, Carabobo",
+   "country": "Venezuela",
+   "display_place": "Montalbán, Carabobo, Venezuela",
+   "admin_level": "ADM2 (municipality)",
+   "true_area_km2": 133.3,
+   "n_pieces": 1,
+   "source": "geoBoundaries CGAZ ADM2",
+   "source_id": "92452058B69792739078610",
+   "licence": "ODbL 1.0 (gbOpen VEN: Efraín Porto Tapiquén, Geografía SIG y Estudios Ambientales)",
+   "rotation_ccw_deg_from_north": 60.0,
+   "metres_per_px_assembled": 107.5,
+   "metres_per_px_exploded": 115.9,
+   "svg": "final/8_sour_cream.svg",
+   "standalone_svg": "final/standalone/sour_cream.svg",
+   "assembled": {
+    "transform": "matrix(1,0,0,1,0,0)",
+    "bbox": [
+     632.9,
+     346.5,
+     752.0,
+     506.1
+    ],
+    "repeat_count": 1,
+    "repeats": []
+   },
+   "exploded": {
+    "transform": "matrix(0.92645,0.04855,-0.04855,0.92645,880.013,-7.62213)",
+    "matrix_abcdef": [
+     0.92645,
+     0.04855,
+     -0.04855,
+     0.92645,
+     880.01266,
+     -7.62213
+    ],
+    "bbox": [
+     1445.5,
+     346.5,
+     1554.5,
+     495.0
+    ]
+   },
+   "leader": {
+    "anchor_on_shape": [
+     1551.2,
+     420.8
+    ],
+    "elbow": [
+     1865,
+     420.8
+    ],
+    "label_anchor": [
+     1905,
+     420.8
+    ]
+   }
+  }
+ ],
+ "true_scale_strip": {
+  "shell": {
+   "area_km2_computed": 37.3
+  },
+  "protein": {
+   "area_km2_computed": 2451.7
+  },
+  "lettuce": {
+   "area_km2_computed": 102361.8
+  },
+  "cheese": {
+   "area_km2_computed": 264.5
+  },
+  "tomato": {
+   "area_km2_computed": 8933.4
+  },
+  "onion": {
+   "area_km2_computed": 12562.6
+  },
+  "cilantro": {
+   "area_km2_computed": 18213.8
+  },
+  "sour_cream": {
+   "area_km2_computed": 133.3
+  }
+ },
+ "true_scale_strip_px_per_km": 1.11
+}
