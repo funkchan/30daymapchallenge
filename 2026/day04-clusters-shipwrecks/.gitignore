@@ -1,0 +1,7 @@
+data/
+*.nc
+*.gpkg
+*.pkl
+__pycache__/
+.env
+outputs/scratch/
