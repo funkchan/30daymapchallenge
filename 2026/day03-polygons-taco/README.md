@@ -57,16 +57,13 @@ Eight real boundary polygons, one taco. The finished graphic is an exploded-view
 
 ## Data (not committed)
 
-`data/` is downloaded or generated on your machine and is not committed (see `.gitignore`). Two local folders:
-
-- `scripts/data/`: the layers and derived tables the scripts read and write (`common.DATA`). Examples: `ne_10m_geography_regions_polys.shp`, `ne_10m_minor_islands.shp`, `geoBoundariesCGAZ_ADM2.gpkg`, `islands.gpkg`, `pool.csv`, `candidates_raw.csv`, `orient_override.csv`, `final_geoms.pkl`, `protein_geoms.pkl`, and `s2/` thumbnails.
-- `day03-polygons-shapes/data/`: Natural Earth 1:10m admin-1 and land, via `D3` in `scripts/common.py`.
+`data/` is downloaded or generated on your machine and is not committed (see `.gitignore`). The scripts read and write one local folder, `scripts/data/` (`common.DATA` and `common.D3`). Put Natural Earth 1:10m admin-0, admin-1 and land there (`ne_10m_admin_0_countries.shp`, `ne_10m_admin_1_states_provinces.shp`, `ne_10m_land.shp`) with the other layers: `ne_10m_geography_regions_polys.shp`, `ne_10m_minor_islands.shp`, `geoBoundariesCGAZ_ADM2.gpkg`, `islands.gpkg`, `pool.csv`, `candidates_raw.csv`, `orient_override.csv`, `final_geoms.pkl`, `protein_geoms.pkl`, and `s2/` thumbnails.
 
 Rebuild them from the sources in `SOURCES_AND_CREDITS.md`:
 
 | Data | Where to get it |
 |---|---|
-| Natural Earth 1:10m Admin-1, Land, Geography Regions (polygons), Minor Islands, Playas, Glaciated Areas | [naturalearthdata.com](https://www.naturalearthdata.com) (public domain) |
+| Natural Earth 1:10m Admin-0, Admin-1, Land, Geography Regions (polygons), Minor Islands, Playas, Glaciated Areas | [naturalearthdata.com](https://www.naturalearthdata.com) (public domain) |
 | US Census TIGER/Line cartographic boundary places, 2023, 1:500k | [census.gov cartographic boundary files](https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html) (public domain) |
 | geoBoundaries CGAZ ADM2 | [geoboundaries.org](https://www.geoboundaries.org) |
 

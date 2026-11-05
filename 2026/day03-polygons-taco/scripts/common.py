@@ -3,7 +3,7 @@ import os, numpy as np, shapely
 from shapely import affinity
 from pyproj import Transformer, Geod
 HERE = os.path.dirname(os.path.abspath(__file__)); DATA = os.path.join(HERE, "data")
-D3 = os.path.join(os.path.dirname(HERE), "day03-polygons-shapes", "data")  # NE admin-1 / land, local only (not committed)
+D3 = DATA  # NE 1:10m admin-0/1 and land, in scripts/data/ (local only, not committed)
 GEOD = Geod(ellps="WGS84")
 
 def font_dir():
