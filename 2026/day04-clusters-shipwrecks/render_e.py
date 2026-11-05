@@ -32,7 +32,7 @@ HUL=gpd.GeoSeries([h for _,h in HG],index=[k_ for k_,_ in HG],crs=E)
 HUL[~HUL.index.isin(C.index[inI])].plot(ax=ax,fc='none',ec=OX,lw=1.8,ls='--',zorder=5.5)
 ei=ext(*INS);ax.add_patch(plt.Rectangle((ei[0],ei[1]),ei[2]-ei[0],ei[3]-ei[1],fill=False,ec=BLK,lw=2,zorder=6))
 # inset
-ia=fig.add_axes([(40+.505*MW)/W,1-(2850-.705*MH)/H-.275*MH/H,.475*MW/W,.275*MH/H])
+ia=fig.add_axes([(40+.505*MW)/W,1-(2850-MH+22)/H-.275*MH/H,.475*MW/W,.275*MH/H])
 big=C.n.idxmax()
 pirate.pts=P[(P.cl>=0)&(P.cl!=big)]
 basemap(ia,ei,gly=.8,cg_=C[inI],counts=False,**kw)
@@ -103,9 +103,10 @@ for yy in np.arange(.3,.66,.02):
     k=(np.hypot(PX[:,0]-c[0],PX[:,1]-c[1])<r).sum()+5*sum(mt.Bbox.from_extents(c[0]-r,c[1]-r,c[0]+r,c[1]+r*1.4).overlaps(o.get_window_extent(rend)) for o in ax.texts)
     if cb is None or k<cb[0]:cb=(k,xx,yy)
 print('compass',cb)
+cb=(0,.935,.635);print('compass fixed',cb)
 compass(ax,cb[1],cb[2],.042)
 
-legend_box(ax,['CAVEATS','Charted/recorded wrecks only: most losses were never','located or were buried by shifting shoals. Clusters','also reflect survey effort. Some points may be','artificial reefs. AWOIS: 2016 snapshot.'],loc=(.985,.012),ha='right',va='bottom',fs=22)
+# caveats box removed (v4b): caveats live in caption.md methods reply 3
 gO=gpd.GeoSeries(gpd.points_from_xy([-75.5],[35.45]),crs=4326).to_crs(E)[0]
 bestO=None
 for yy in np.arange(.2,.66,.02):
@@ -181,8 +182,8 @@ for axx,m_ in ((ax,~inINS[O.index]),(ia,np.ones(len(O),bool))):
     axx.scatter(dp.geometry.x,dp.geometry.y,s=170,marker='x',c='#F1E4C3',lw=2.2,zorder=4.6,path_effects=[pe.withStroke(linewidth=3.6,foreground='#1F2A2C')])
 ia.set_xlim(ei[0],ei[2]);ia.set_ylim(ei[1],ei[3])
 # symbol key above caveat box
-fig.canvas.draw();cvb=[t for t in ax.texts if t.get_text().startswith('CAVEATS')][0].get_window_extent(rend)
-kw_,kh_=820,150;kx=cvb.x1-kw_;ky=cvb.y1+18
+fig.canvas.draw();axb_=ax.get_window_extent()
+kw_,kh_=820,150;kx=axb_.x1-kw_-18;ky=axb_.y0+18
 ka=fig.add_axes([kx/W,ky/H,kw_/W,kh_/H]);ka.set_xlim(0,kw_);ka.set_ylim(0,kh_);ka.axis('off')
 ka.add_patch(plt.matplotlib.patches.FancyBboxPatch((4,4),kw_-8,kh_-8,boxstyle='round,pad=0,rounding_size=12',fc=BONE,ec=OX,lw=2.2))
 yy1,yy2=105,42;fk=dict(fontsize=22,family=NUM,color=BLK,va='center')
