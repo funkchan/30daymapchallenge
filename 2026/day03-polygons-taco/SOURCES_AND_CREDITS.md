@@ -1,6 +1,6 @@
 # Taco Tuesday (#30DayMapChallenge 2026, Day 3 "Polygons"): sources and credits
 
-Every silhouette is a real boundary polygon. None has been redrawn or idealised. The only changes are rotation and uniform scaling, plus a slight pull-apart ("explode") of the diced-cube clusters, which is a graphic treatment and is noted in candidates.csv. Each shape was compared in its own local Lambert azimuthal equal-area projection.
+Every silhouette is a real boundary polygon. None has been redrawn or idealised. The only changes are rotation and uniform scaling, plus a slight pull-apart ("explode") of the diced-cube clusters, which is a graphic treatment and is noted in `results/candidates.csv`. Each shape was compared in its own local Lambert azimuthal equal-area projection.
 
 ## Data
 - **Natural Earth** 1:10m: Admin-1 States/Provinces v5.1.1, Land v5.1.1, Geography Regions (polygons) v5.0.0 (used for island names). Public domain. https://www.naturalearthdata.com. Credit (optional): "Made with Natural Earth."
@@ -24,7 +24,7 @@ Every silhouette is a real boundary polygon. None has been redrawn or idealised.
 | Cilantro | Halmahera Island, Indonesia | Natural Earth land | Public domain |
 | Sour cream | Montalbán, Carabobo, Venezuela | geoBoundaries VEN ADM2, from Efraín Porto Tapiquén, *Geografía, SIG y Estudios Ambientales* | **ODbL 1.0**: attribution required. A rendered image is a "produced work", so share-alike doesn't apply to the PNG. Réunion (public domain) is the licence-clean swap; Salinas Grandes salt flat (NE playas, public domain) is the colour-true swap. |
 
-Runner-up licences are in `candidates.csv`. Watch out for these:
+Runner-up licences are in `results/candidates.csv`. Watch out for these:
 - Nakasatsunai (JPN ADM2): CC BY-SA 2.0, OSM-derived
 - Almus and Antalya-level Turkish data from gbOpen: ODbL, OSM-derived
 - GTM, IDN and LSO: CC BY 3.0 IGO
@@ -37,11 +37,11 @@ Protein cluster names are descriptive: Natural Earth gives the island parts but 
 
 ## Land-cover colour check (review only, not in the final graphic)
 - **Sentinel-2 cloudless 2016** by EOX IT Services GmbH, layer `s2cloudless` via https://tiles.maps.eox.at/wms. Licence: **CC BY 4.0**. Credit: "Sentinel-2 cloudless – https://s2maps.eu by EOX IT Services GmbH (Contains modified Copernicus Sentinel data 2016)". The 2017+ mosaics are CC BY-NC-SA 4.0, so they weren't used.
-- The method takes the median RGB of the pixels inside each polygon, dropping bluish-dark sea pixels that bleed in from coarse 1:10m coastlines. The colour verdicts were judged by eye from the thumbnails (data/s2/*_thumb.png) and are recorded in candidates.csv (`s2_median_rgb`, `ground_colour`, `colour_match`). The mosaic is a mostly-summer composite, so cropland reads green.
+- The method takes the median RGB of the pixels inside each polygon, dropping bluish-dark sea pixels that bleed in from coarse 1:10m coastlines. The colour verdicts were judged by eye from the thumbnails (`scripts/data/s2/*_thumb.png`, downloaded locally and not committed) and are recorded in `results/candidates.csv` (`s2_median_rgb`, `ground_colour`, `colour_match`). The mosaic is a mostly-summer composite, so cropland reads green.
 - If any satellite imagery goes into the final graphic, add the EOX credit above.
 
 ## Credits as set in the final graphic (v13, bottom-left)
-Only the required outside data credits and the map line; no fill credit (the fills are made by our own team, per funkchan, 3 Nov).
+Only the required outside data credits and the map line; no fill credit (the illustrated fills are original, per funkchan, 3 Nov).
 > Data: Natural Earth and US Census TIGER/Line (public domain). Via geoBoundaries (Runfola et al. 2020): Iowa counties, US Census (public domain); La Pampa departments © IGN Argentina, UNHCR, OCHA ROLAC (CC BY 3.0 IGO); Montalbán contains information from Efraín Porto Tapiquén, Geografía, SIG y Estudios Ambientales, made available under the ODbL 1.0.
 > Map: @funkchan · #30DayMapChallenge Day 3: Polygons
 

@@ -3,15 +3,12 @@
 import os, re, unicodedata, numpy as np, pandas as pd, shapely, geopandas as gpd
 from shapely import affinity, wkt as W
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
-from matplotlib import font_manager as fm
 from matplotlib.patches import PathPatch
 from matplotlib.path import Path as MPath
-from common import HERE, DATA, local, parts, norm, mrr_aspect
+from common import HERE, DATA, local, parts, norm, mrr_aspect, register_fonts
 from geomcache import fetch
 import importlib; M = importlib.import_module("02_match")
-FD = "/usr/share/fonts/truetype/sand-box/google/"
-for f in os.listdir(FD):
-    if f.endswith(".ttf"): fm.fontManager.addfont(os.path.join(FD, f))
+register_fonts()
 PAPER, INK, MUTE, ACC = "#F2EDDF", "#2A2620", "#6E675A", "#B5532F"
 NE_A1, NE_ISL, CG2 = "Natural Earth 10m admin-1", "Natural Earth 10m land, named by geography_regions_polys", "geoBoundaries CGAZ ADM2"
 LIC = {NE_A1: "Public domain (Natural Earth)", NE_ISL: "Public domain (Natural Earth)", "bundle": "Public domain (Natural Earth)",

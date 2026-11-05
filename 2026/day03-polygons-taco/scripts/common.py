@@ -3,8 +3,33 @@ import os, numpy as np, shapely
 from shapely import affinity
 from pyproj import Transformer, Geod
 HERE = os.path.dirname(os.path.abspath(__file__)); DATA = os.path.join(HERE, "data")
-D3 = os.path.join(os.path.dirname(HERE), "day03-polygons-shapes", "data")  # NE admin-1 / land / CGAZ ADM1 from Day 3
+D3 = os.path.join(os.path.dirname(HERE), "day03-polygons-shapes", "data")  # NE admin-1 / land, local only (not committed)
 GEOD = Geod(ellps="WGS84")
+
+def font_dir():
+    """SIL OFL fonts. FONT_DIR if set, otherwise the day folder's fonts/ (gitignored)."""
+    env = os.environ.get("FONT_DIR")
+    if env:
+        return env
+    return os.path.join(os.path.dirname(HERE), "fonts")
+
+def register_fonts():
+    """Register every .ttf/.otf under font_dir() with matplotlib. Raises if none are found."""
+    from matplotlib import font_manager as fm
+    fd = font_dir()
+    found = []
+    if os.path.isdir(fd):
+        for root, _, files in os.walk(fd):
+            for name in files:
+                if name.lower().endswith((".ttf", ".otf")):
+                    fm.fontManager.addfont(os.path.join(root, name))
+                    found.append(name)
+    if not found:
+        raise SystemExit(
+            f"No font files in {fd}. Download Alegreya SC, Alegreya Sans and Barlow Condensed "
+            "(SIL OFL, https://fonts.google.com) into that folder, or set FONT_DIR. See README.md."
+        )
+    return fd
 
 def local(g):
     """Project lon/lat geometry to a Lambert azimuthal equal-area centred on it (true shape, metres)."""

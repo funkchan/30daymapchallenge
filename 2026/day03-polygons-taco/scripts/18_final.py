@@ -1,28 +1,36 @@
 #!/usr/bin/env python3
 """Final handoff package: shared 2400x3000 canvas. Each ingredient path is stored at its ASSEMBLED position (identity transform);
-the EXPLODED placement is a uniform scale + translate of the same path. Writes final/*.svg, final/standalone/*.svg, final/layout.json/svg, preview PNG."""
+the EXPLODED placement is a uniform scale + translate of the same path.
+
+Committed copies of what this script writes live under ../outputs/ (layer SVGs, standalone clip masks, layout.json, layout.svg, preview_silhouettes.png, preview_300px.png). The candidate table is ../results/candidates.csv. This script still reads and writes a working directory named final/ next to itself (scripts/final/), and the path keys it stores in layout.json use that final/ prefix. Those working files are not the committed copies.
+
+Local inputs (pickles, and any earlier script backups) are under data/ next to this file. data/ is downloaded or generated on your machine and is not committed. See README.md for the sources and for FONT_DIR / fonts/.
+"""
 import os, json, numpy as np, pandas as pd, shapely
 from shapely import affinity
-from common import HERE, DATA, parts
+from common import HERE, DATA, parts, font_dir
 OUT = os.path.join(HERE, "final"); W, H, BG = 2400, 3000, "#F3EDE0"
 ORDER = ["shell", "protein", "lettuce", "cheese", "tomato", "onion", "cilantro", "sour_cream"]   # bottom -> top
 LAB = {"shell": "Taco shell", "protein": "Ground beef", "lettuce": "Shredded lettuce", "cheese": "Shredded cheese", "tomato": "Diced tomato",
        "onion": "Diced onion", "cilantro": "Cilantro", "sour_cream": "Sour cream"}
 # ---- SHELL CONFIG: the one place to swap the shell. (v8: geom = silhouette SVG in metres via data-metres-per-px, already rotated so the flat edge is down.)
-#      Previous (Kochi, open crescent) config is in data/18_final_v7.py. rim = how the outline is read: the arc is the rim the fillings peek over,
+#      The committed Wainwright silhouette is outputs/silhouettes/shell-dome_Wainwright_United-States_rot126ccw.svg.
+#      Earlier Kōchi (open crescent) and v7–v12 script backups are not in the repo; they were local files under data/.
+#      rim = how the outline is read: the arc is the rim the fillings peek over,
 #      the flat edge is the base. All filling positions derive from the front outline (dome centre on the flat edge + radial rays to the arc).
-#      place/short/strip feed the labels; csv_rank marks the pick in candidates.csv.
+#      place/short/strip feed the labels; csv_rank marks the pick in results/candidates.csv.
 SHELL_CFG = dict(geom="silhouettes/shell-dome_Wainwright_United-States_rot126ccw.svg", rim="arc up, flat edge down (front wall = closed dome; fillings peek over the arc)",
                  place=("Wainwright city, Alaska", "United States"), short="Wainwright, Alaska", strip="Wainwright", csv_rank="dome-1")
 PLACE = {"shell": SHELL_CFG["place"], "protein": ("Chonos Archipelago", "Chile"), "lettuce": ("Iceland", "Iceland"),
          "cheese": ("Zadar islands (Dugi Otok, Ugljan, Pašman…)", "Croatia"), "tomato": ("Six NW Iowa counties", "United States"),
          "onion": ("Five La Pampa departments", "Argentina"), "cilantro": ("Halmahera", "Indonesia"), "sour_cream": ("Montalbán, Carabobo", "Venezuela")}
-# ---- mark final picks in candidates.csv
-c = pd.read_csv(os.path.join(HERE, "candidates.csv"), dtype={"rank": object})
+# ---- mark final picks in results/candidates.csv (there is no candidates.csv next to this script)
+CAND = os.path.join(os.path.dirname(HERE), "results", "candidates.csv")
+c = pd.read_csv(CAND, dtype={"rank": object})
 c["final"] = False
 for ing in ORDER:
     rk = "ground_beef-1" if ing == "protein" else (SHELL_CFG["csv_rank"] if ing == "shell" else "1"); c.loc[(c.ingredient == ing) & (c["rank"] == rk), "final"] = True
-c["recommended"] = c["final"]; c.to_csv(os.path.join(HERE, "candidates.csv"), index=False)
+c["recommended"] = c["final"]; c.to_csv(CAND, index=False)
 F = c[c.final].set_index("ingredient"); assert len(F) == 8
 # ---- base geometries (local equal-area metres, y up, best-fit rotation already applied)
 GEO = pd.read_pickle(os.path.join(DATA, "final_geoms.pkl")); PG = pd.read_pickle(os.path.join(DATA, "protein_geoms.pkl"))
@@ -57,7 +65,7 @@ EX, K, GAP, Y_BOTTOM = 1500, 0.55, 146, 2800   # v11: GAP 146 so both columns st
 E = {}; yb = Y_BOTTOM
 for ing in ORDER:
     h = wh(geo0[ing])[1] * K; E[ing] = MT(EX, yb - h / 2) @ MS(K); yb = yb - h - GAP
-# ---- ASSEMBLED v8: classic side-view hard-shell taco (cartoon reference shell_search/ref.png). FRONT wall = the shell dome (flat edge down, arc up);
+# ---- ASSEMBLED v8: classic side-view hard-shell taco (the reference sketch is not in the repo). FRONT wall = the shell dome (flat edge down, arc up);
 #      fillings sit BEHIND it and peek out along the arc; the LEFT open end shows the inside (beef + lettuce) against the BACK wall = a second real copy
 #      offset up-left. Built untilted in a local frame (y down), then tilted about the dome centre and translated. Uniform scale + rotation only.
 TILT, SHW = -3, 1080                     # tilt deg (neg = ccw on screen), front shell width px
@@ -235,7 +243,7 @@ DL += [dict(item="tomato dice", mask_svg="final/standalone/tomato.svg", transfor
 for k in range(1 + len(REPM["cilantro"])): DL.append(dict(item=f"cilantro #{k+1}", mask_svg="final/standalone/cilantro.svg", transform=None if k == 0 else mstr(svgm(REPM["cilantro"][k - 1])), tile="cilantro", stroke=False))
 DL.append(dict(item="sour cream (crown)", mask_svg="final/standalone/sour_cream.svg", transform=None, tile="sour_cream", stroke=True))
 lay = dict(canvas=dict(width=W, height=H, background=BG, units="px", y_axis="down"),
-           notes="Each path in final/<n>_<ingredient>.svg is in canvas px at its (first) ASSEMBLED position (identity transform). EXPLODED = the SVG matrix given, applied to the same path "
+           notes="Committed copies of these SVGs are outputs/<n>_<ingredient>.svg and outputs/standalone/. The path keys below use a final/ prefix, which is this script's working directory (scripts/final/); outputs/layout.json already stores those keys. Each path is in canvas px at its (first) ASSEMBLED position (identity transform). EXPLODED = the SVG matrix given, applied to the same path "
                  "(protein/tomato/onion: one matrix per piece, in path subpath order, because those pieces are rearranged in the assembled taco). Shapes are sized to read as a taco, NOT to true scale; "
                  "true_area_km2 and metres_per_px_* record the real size. Stack order 1 = bottom. The assembled taco is drawn from assembled_taco.draw_list, NOT in stack order.",
            assembled_taco=dict(tilt_deg=-TILT, tilt_note=f"whole taco rotated {-TILT} deg counter-clockwise on screen; all outlines undistorted (uniform scale + rotation only)",
@@ -276,7 +284,7 @@ for f_ in ["0_shell_back.svg", "0_cast_shadow.svg"]: pass
 allg = [geo[i] for i in ORDER] + [g for v in REPG.values() for g in v] + [SHADOW] + list(EXG.values())
 AB = np.array([g.bounds for g in allg]); TB = (AB[:, 0].min(), AB[:, 1].min(), AB[:, 2].max(), AB[:, 3].max())
 lay["assembled_taco"]["bbox"] = [round(float(v), 1) for v in TB]
-# ---- layout.svg + silhouette PNG: flat hint tones (Illustration's tiles replace them in 19_filled.py), guide axis, leaders, labels, true-scale strip, credits
+# ---- layout.svg + silhouette PNG: flat hint tones (the illustrated fills replace them in 19_filled.py), guide axis, leaders, labels, true-scale strip, credits
 TONE = {"shell": "#DDB767", "shell_back": "#B98E48", "protein": "#7A5038", "lettuce": "#A3B86C", "cheese": "#E9B640", "tomato": "#C95A42", "onion": "#F1ECE0", "cilantro": "#557D3B", "sour_cream": "#FBF8F1"}
 INK, MUTE = "#2A2620", "#6E675A"
 SHORT = {"shell": SHELL_CFG["short"], "cheese": "Zadar islands", "tomato": "6 NW Iowa counties", "onion": "5 La Pampa depts", "sour_cream": "Montalbán"}
@@ -296,10 +304,12 @@ for it in lay["ingredients"]:
     else: s.append(f'<path d="{d_of(geo[it["id"]])}" fill-rule="evenodd" transform="{it["exploded"]["transform"]}" fill="{TONE[it["id"]]}" stroke="{INK}" stroke-width="{3/np.sqrt(abs(np.linalg.det(XM[it["id"]][:2,:2]))):.2f}"/>')
 s.append("</g><g id=\"leaders\">")
 from PIL import ImageFont
+FD = font_dir()
+def tw(txt, f, sz): return ImageFont.truetype(os.path.join(FD, f), sz).getlength(txt)
 for it in lay["ingredients"]:   # label fit check: heading (multiplier same size, part of the heading) and place line must end inside the canvas
     _rc = it["assembled"]["repeat_count"]; _h = f'{it["stack_order"]} · {it["label"].upper()}' + (f" ×{_rc}" if _rc > 1 else "")
     _p = (f"{_rc}× " if _rc > 1 else "") + disp_place(SHORT.get(it["id"], it["place"]), "USA" if it["country"] == "United States" else it["country"])
-    _wh, _wp = ImageFont.truetype("/usr/share/fonts/truetype/sand-box/google/Barlow Condensed/BarlowCondensed-Bold.ttf", 48).getlength(_h), ImageFont.truetype("/usr/share/fonts/truetype/sand-box/google/Alegreya Sans/AlegreyaSans-Regular.ttf", 38).getlength(_p)
+    _wh, _wp = ImageFont.truetype(os.path.join(FD, "Barlow Condensed", "BarlowCondensed-Bold.ttf"), 48).getlength(_h), ImageFont.truetype(os.path.join(FD, "Alegreya Sans", "AlegreyaSans-Regular.ttf"), 38).getlength(_p)
     assert LABEL_X + max(_wh, _wp) <= W - 40, (_h, _p, LABEL_X + max(_wh, _wp)); print("label right edge", round(LABEL_X + max(_wh, _wp)), _h)
 for it in lay["ingredients"]:
     (x0, y0), (x1, y1), (x2, y2) = it["leader"]["anchor_on_shape"], it["leader"]["elbow"], it["leader"]["label_anchor"]; rc = it["assembled"]["repeat_count"]
@@ -308,9 +318,6 @@ for it in lay["ingredients"]:
              f'<text x="{x2}" y="{y2+38}" font-family="Alegreya Sans" font-size="38" fill="{INK}">{(str(rc) + "× ") if rc > 1 else ""}{disp_place(SHORT.get(it["id"], it["place"]), "USA" if it["country"] == "United States" else it["country"])}</text>')
 FINAL_TEXT = True   # final assembly: true-scale strip + credits (placeholders removed)
 # ---- TRUE-SCALE strip (left column under the taco): all 8 places north-up at ONE shared scale. Areas are COMPUTED here from the equal-area geometries.
-from PIL import ImageFont
-FD = "/usr/share/fonts/truetype/sand-box/google/"
-def tw(txt, f, sz): return ImageFont.truetype(FD + f, sz).getlength(txt)
 REGF, ITF = "Alegreya Sans/AlegreyaSans-Regular.ttf", "Alegreya Sans/AlegreyaSans-Italic.ttf"
 def true_geom(ing):   # undo the documented dice display treatment (each cube pulled 10% from the cluster centroid, shrunk to 92%) -> real geometry
     g = base[ing]

@@ -15,7 +15,7 @@ How it was made: ~54,000 real boundaries (Natural Earth, geoBoundaries, US Censu
 ```
 Top matches were checked by eye. Only uniform scaling and rotation, no stretching or mirroring. Repeats are marked ×N; 3 dice repeat real counties, and dice are spaced apart and shrunk 8% (true sizes in the strip). Credits are in the image; code in the repo.
 ```
-(No repo link yet: funkchan creates the repo himself. Swap "the repo" for the URL once it exists.)
+Repo: https://github.com/funkchan/30daymapchallenge/tree/main/2026/day03-polygons-taco (this link works once the day folder is merged to main).
 
 ## Alt text (874 characters; X's limit is 1,000)
 ```

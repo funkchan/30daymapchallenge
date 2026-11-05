@@ -1,13 +1,10 @@
 import os, numpy as np, pandas as pd, shapely
 from shapely import affinity
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
-from matplotlib import font_manager as fm
 from matplotlib.patches import PathPatch
 from matplotlib.path import Path as MPath
-from common import HERE, DATA, parts
-FD = "/usr/share/fonts/truetype/sand-box/google/"
-for f in os.listdir(FD):
-    if f.endswith(".ttf"): fm.fontManager.addfont(os.path.join(FD, f))
+from common import HERE, DATA, parts, register_fonts
+register_fonts()
 PAPER, INK, MUTE, ACC = "#F2EDDF", "#2A2620", "#6E675A", "#B5532F"
 df = pd.read_csv(os.path.join(DATA, "candidates_raw.csv")); GEO = pd.read_pickle(os.path.join(DATA, "deliver_geoms.pkl"))
 # manual orientation overrides (deg CCW, applied on top of template orientation) after visual review

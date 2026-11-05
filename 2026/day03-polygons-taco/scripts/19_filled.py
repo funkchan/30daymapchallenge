@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
-"""Filled preview: clips Illustration's tiles (fill/tiles) into the final geometry with fill/clip_fill.py (imported, not modified),
-composites assembled taco + exploded stack + Atlas text/leaders on #F3EDE0. Writes final/preview_filled.png (+ _300px)."""
+"""Filled graphic: clips the illustrated fills (fill/tiles, local, not committed) into the final geometry with scripts/clip_fill.py,
+composites the assembled taco, the exploded stack and the text/leaders on #F3EDE0.
+Writes preview_filled_300px.png, day03_taco_tuesday.png and day03_taco_tuesday_1200.png into the working final/ directory next to this script.
+The committed copies are under ../outputs/. preview_filled.png is not written: it was a byte-for-byte copy of day03_taco_tuesday.png."""
 import os, re, io, json, sys, numpy as np, cairosvg
 from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, os.path.join(HERE, "fill"))
@@ -8,10 +10,10 @@ from clip_fill import clip_fill
 F = os.path.join(HERE, "final"); TILES = os.path.join(HERE, "fill", "tiles"); TMP = os.path.join(HERE, "data", "filled_masks"); os.makedirs(TMP, exist_ok=True)
 L = json.load(open(os.path.join(F, "layout.json"))); W, H, BG = L["canvas"]["width"], L["canvas"]["height"], L["canvas"]["background"]
 SH = {"shell": (.30, 5), "shell_back": (.30, 5), "protein": (.38, 2), "lettuce": (.32, 3.5), "cheese": (.34, 2), "tomato": (.32, 2.5),
-      "onion": (.55, 2.5), "cilantro": (.35, 2.5), "sour_cream": (.55, 4)}           # strength / width from fill/NOTES.md
+      "onion": (.55, 2.5), "cilantro": (.35, 2.5), "sour_cream": (.55, 4)}           # shadow strength, width in px
 SH_EXP = {"tomato": (.32, 1.5), "onion": (.55, 1.5)}
-WARM_GREY = "#6E675A"   # onion dice: ~1.5 px warm-grey stroke (Director tweak); sour cream keeps the 45% ink stroke
-STROKE = {"onion", "sour_cream"}; STROKE_CLR, STROKE_OP, STROKE_W = "#2A2620", 0.45, 1.75   # Illustration's request: thin warm ink stroke at 45%
+WARM_GREY = "#6E675A"   # onion dice: ~1.5 px warm-grey stroke; sour cream keeps the 45% ink stroke
+STROKE = {"onion", "sour_cream"}; STROKE_CLR, STROKE_OP, STROKE_W = "#2A2620", 0.45, 1.75   # thin warm ink stroke at 45%
 canvas = Image.new("RGBA", (W, H), BG)
 def d_of(svg): return re.search(r' d="([^"]+)"', open(svg).read()).group(1)
 def bbox_pts(d, m=None):
@@ -51,11 +53,11 @@ for i in L["ingredients"]:
         m = mat(e["transform"]); put(ing, f"x_{ing}", d_of(os.path.join(HERE, i["svg"])), m, sh=SH[ing], stroke=ing in STROKE, sscale=float(np.sqrt(abs(m[0] * m[3] - m[1] * m[2]))))
     else:
         put(ing, f"x_{ing}", d_of(os.path.join(HERE, e["standalone_svg"])), sh=SH_EXP.get(ing, SH[ing]), stroke=ing in STROKE, sw=1.5 if ing == "onion" else None)
-# ---- Atlas text layer: everything in layout.svg except background, shapes, axis
+# ---- text layer: everything in layout.svg except background, shapes, axis
 t = re.sub(r'<rect width="\d+" height="\d+" fill="[^"]+"/>', "", svg, count=1)
 t = re.sub(r'<g id="assembled">.*?</g>', "", t, count=1, flags=re.S); t = re.sub(r'<g id="exploded">.*?</g>', "", t, count=1, flags=re.S); t = t.replace(axis, "")
 canvas.alpha_composite(Image.open(io.BytesIO(cairosvg.svg2png(bytestring=t.encode(), output_width=W, output_height=H))).convert("RGBA"))
-out = canvas.convert("RGB"); out.save(os.path.join(F, "preview_filled.png"), optimize=True)
+out = canvas.convert("RGB")
 out.resize((300, 375), Image.LANCZOS).save(os.path.join(F, "preview_filled_300px.png"))
 out.save(os.path.join(F, "day03_taco_tuesday.png"), optimize=True)                                   # FINAL graphic 2400x3000
 out.resize((1200, 1500), Image.LANCZOS).save(os.path.join(F, "day03_taco_tuesday_1200.png"), optimize=True)   # web copy

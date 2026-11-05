@@ -1,6 +1,7 @@
 # downloaded or generated locally, not committed
 data/
 work/
+# SIL OFL fonts (Alegreya SC, Alegreya Sans, Barlow Condensed); see README.md. Override with FONT_DIR.
 fonts/
 __pycache__/
 *.pyc
