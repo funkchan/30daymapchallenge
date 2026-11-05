@@ -1,10 +1,10 @@
 """Day 4 outlier marks: skull-and-crossbones, drawn from simple geometry. python3 make_skulls.py
-Writes skull_ink/skull_bone SVG + PNGs (20, 40, 128 px), proof.png. Reads ../glyphs/wreck_t2.png (read only)."""
+Writes skull_ink/skull_bone SVG + PNGs (20, 40, 128 px), proof.png. Reads ../wreck_t2.png (read only)."""
 import os, io, random, math, datetime, cairosvg
 from PIL import Image, ImageDraw
 HERE = os.path.dirname(os.path.abspath(__file__))
 INK, OX, BRASS, BONE, PARCH = '#17120E', '#7A1A1A', '#B8893A', '#F1E4C3', '#E8D4A2'
-TAN, SHALLOW, DEEP = '#DCC38B', '#C1C19C', '#475C62'   # TAN/SHALLOW/DEEP sampled from outputs/day04_v5_skulls.png
+TAN, SHALLOW, DEEP = '#DCC38B', '#C1C19C', '#475C62'   # sampled from the v5 skulls render (not kept)
 SIZE = 20                                             # on-map px tall at 2400x3000 (10 px at 1200)
 
 def keep(p):
@@ -92,7 +92,7 @@ def proof():
         g = gb if x > 560 else gi; patch.paste(g, (int(x-SIZE/2), int(y-SIZE/2)), g)
     for x, y in ((420, 140), (440, 158), (405, 165), (470, 150), (450, 185), (430, 200), (480, 210), (700, 120), (690, 140)):
         plus(pd, x, y)
-    t2 = Image.open(os.path.join(HERE, '..', 'glyphs', 'wreck_t2.png')).convert('RGBA').resize((90, 90), Image.LANCZOS)
+    t2 = Image.open(os.path.join(HERE, '..', 'wreck_t2.png')).convert('RGBA').resize((90, 90), Image.LANCZOS)
     patch.paste(t2, (400, 200), t2)
     im.paste(patch, (24, py + 20)); d.text((24, py), 'Density patch at 1x (2400 render): 60 skulls, min spacing 20 px; red + cluster marks (18 px, 3 px) and a t2 ship (90 px, guess)', fill=INK)
     sm = patch.resize((pw//2, ph//2), Image.LANCZOS); im.paste(sm, (950, py + 20)); d.text((950, py), 'same patch at 1200 px equivalent (50%)', fill=INK)

@@ -21,18 +21,18 @@ Winner **A**: bones crossed diagonally behind a rounded cranium, with knobbed en
 - **Target:** **20 px** tall on the 2400×3000 render (10 px at 1200). Both variants use the same size.
 - Why 20 px:
   - The current `×` is `s=170` pt² → √170 ≈ 13 pt ≈ 18 px at dpi 100.
-  - Atlas's placeholder skull is `s=170×1.05` → ~18.5 px.
+  - A placeholder skull at `s=170×1.05` is about 18.5 px.
   - 20 px keeps the same visual weight but gives the sockets ~3 px each, the minimum that survives at 1200 (1.5 px).
   - In the Hatteras crop, neighbouring outliers mostly sit 20–40 px apart, so 20 px marks just touch in the tightest pairs and don't pile up. Going to 24 px would start overlapping in the Diamond Shoals scatter.
 - **matplotlib:** with the marker scaled to its box, `s ≈ (20 px × 72/100)² ≈ 207` pt². Alternatively, place the PNG with an `OffsetImage` at its native 20 px with zoom 1 (40 px PNG at zoom 0.5 for crisper edges).
 - Scale uniformly only.
 
 ## Which variant
-- **Rule:** use **ink** where depth ≤ 200 m (shelf: parchment, tan or shallow-water tones), and **bone** beyond 200 m (deep teal). This matches render_g.py's existing `deep = od > 200`.
+- **Rule:** use **ink** where depth ≤ 200 m (shelf: parchment, tan or shallow-water tones), and **bone** beyond 200 m (deep teal). The render uses the same rule: bone where depth is greater than 200 m.
 - **Luminance fallback:** use bone when the background's relative luminance is below 0.18.
 
 ## Colours and contrast (WCAG)
-Sampled backgrounds from day04_v5_skulls.png: tan `#DCC38B`, shallow water `#C1C19C`, deep teal `#475C62`.
+Sampled backgrounds from the v5 skulls render (not kept): tan `#DCC38B`, shallow water `#C1C19C`, deep teal `#475C62`.
 
 | Background | ink #17120E | bone #F1E4C3 | oxblood + #7A1A1A |
 |---|---|---|---|

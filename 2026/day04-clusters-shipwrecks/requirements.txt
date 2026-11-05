@@ -1,0 +1,11 @@
+numpy
+pandas
+geopandas
+matplotlib
+shapely
+scipy
+scikit-learn
+Pillow
+xarray
+pyproj
+cairosvg

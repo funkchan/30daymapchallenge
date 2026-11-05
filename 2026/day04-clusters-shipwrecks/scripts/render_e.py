@@ -1,8 +1,12 @@
+import os,sys
+_ROOT=os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)),'..'))
+os.chdir(_ROOT)
+sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
 import matplotlib.transforms as mt
 from pirate import *
 W,H=2400,3000;fig=plt.figure(figsize=(24,30),dpi=100);fig.patch.set_facecolor(PARCH)
 BX=(-76.75,34.35,-74.9,36.95)
-MW,MH=2320,2560
+MW,MH=2320,2540
 ax=fig.add_axes([40/W,1-2850/H,MW/W,MH/H])
 kp=gpd.GeoSeries(gpd.points_from_xy([-76.15,-76.75,-76.2],[37.02,34.5,35.5]),crs=4326).to_crs(E)
 y0=kp.y.min()-12000;y1=kp.y.max()+42000;wx=kp.x.min()-26000;wid=(y1-y0)*MW/MH
@@ -24,29 +28,36 @@ INS=(-76.45,36.72,-75.55,37.42)
 cll=C.to_crs(4326).geometry;inI=(cll.x>INS[0])&(cll.x<INS[2])&(cll.y>INS[1])&(cll.y<INS[3])
 OUTC='#5E4E3C';kw=dict(mark=170,heavy=True,outc=OUTC,outa=.85,outlw=2.2)
 PL=P.to_crs(4326).geometry;inINS=(PL.x>INS[0])&(PL.x<INS[2])&(PL.y>INS[1])&(PL.y<INS[3])
-pirate.pts=P[(P.cl>=0)]
+pirate.pts=P[(P.cl>=0)&~inINS]
 basemap(ax,(wx,y0,wx+wid,y1),gly=1.1,cg_=C[~inI],**kw)
 from shapely.geometry import MultiPoint
 HG=[(k_,MultiPoint(list(zip(d.geometry.x,d.geometry.y))).convex_hull.buffer(1500)) for k_,d in P[P.cl>=0].groupby('cl')]
 HUL=gpd.GeoSeries([h for _,h in HG],index=[k_ for k_,_ in HG],crs=E)
-HUL.plot(ax=ax,fc='none',ec=OX,lw=1.8,ls='--',zorder=5.5)
-ei=ext(*INS);0 and ax.add_patch(plt.Rectangle((ei[0],ei[1]),ei[2]-ei[0],ei[3]-ei[1],fill=False,ec=BLK,lw=2,zorder=6))
+HUL[~HUL.index.isin(C.index[inI])].plot(ax=ax,fc='none',ec=OX,lw=1.8,ls='--',zorder=5.5)
+ei=ext(*INS);ax.add_patch(plt.Rectangle((ei[0],ei[1]),ei[2]-ei[0],ei[3]-ei[1],fill=False,ec=BLK,lw=2,zorder=6))
 # inset
-ia=fig.add_axes([0,0,.001,.001]);ia.set_visible(False)
-big=C.n.idxmax();pirate.pts=P
-ax.set_xlim(wx,wx+wid);ax.set_ylim(y0,y1)
-GP={82:(-75.60,37.03),23:(-75.82,36.76),11:(-75.80,37.27),8:(-75.42,36.80),6:(-76.17,37.31)}
+ia=fig.add_axes([(40+.505*MW)/W,1-(2850-MH+22)/H-.275*MH/H,.475*MW/W,.275*MH/H])
+big=C.n.idxmax()
+pirate.pts=P[(P.cl>=0)&(P.cl!=big)]
+basemap(ia,ei,gly=.8,cg_=C[inI],counts=False,**kw)
+bp=P[P.cl==big];ia.scatter(bp.geometry.x,bp.geometry.y,s=170*1.3,marker='+',c=OX,lw=3,alpha=.28,zorder=5)
+OFF={11:(70,55),23:(-95,-30),82:(0,-22),8:(45,50)}
 for k_,r_ in C[inI].iterrows():
-    n_=int(r_.n);lo_,la_=GP.get(n_,(None,None))
-    g_=gpd.GeoSeries(gpd.points_from_xy([lo_],[la_]),crs=4326).to_crs(E)[0]
-    ax.plot([r_.geometry.x,g_.x],[r_.geometry.y,g_.y],color=BLK,lw=1.6,zorder=7.5)
-    ax.scatter([r_.geometry.x],[r_.geometry.y],s=40,c=BLK,zorder=7.6)
-    glyph(ax,g_.x,g_.y,r_.tier,1.1 if n_<50 else .95)
-    ax.annotate(f'{n_}',(g_.x,g_.y),xytext=(0,-14),textcoords='offset points',ha='center',va='top',fontsize=24,family=NUM,fontweight='bold',color=BLK,zorder=9,bbox=dict(boxstyle='round,pad=0.15',fc=BONE,ec=BLK,lw=.8))
+    dx_,dy_=OFF.get(int(r_.n),(0,-18))
+    ia.annotate(f'{int(r_.n)}',(r_.geometry.x,r_.geometry.y),xytext=(dx_,dy_),textcoords='offset points',ha='center',va='top' if dy_<=0 else 'bottom',fontsize=24,family=NUM,fontweight='bold',color=BLK,zorder=9,
+      bbox=dict(boxstyle='round,pad=0.15',fc=BONE,ec=BLK,lw=.8),arrowprops=None if abs(dx_)<1 else dict(arrowstyle='-',color=BLK,lw=1.2))
+HUL.plot(ax=ia,fc='none',ec=OX,lw=2,ls='--',zorder=5.5)
+pirate.pts=P
+for s_ in ia.spines.values():s_.set_lw(3)
+from matplotlib.patches import ConnectionPatch
+for (xa,ya),(xb,yb) in [((ei[2],ei[1]),(0,0))]:
+    fig.add_artist(ConnectionPatch((xa,ya),(xb,yb),coordsA=ax.transData,coordsB=ia.transAxes,color=BLK,lw=1.3,ls='-',alpha=.8,zorder=7))
+ia.set_xlabel('');ia.set_ylabel('')
+title_tag(ia,'Chesapeake Bay mouth (zoom)','tl',fs=26)
 bd=P[P.cl==big];bc=C.loc[big].geometry
 sh20=100*(np.hypot(bd.geometry.x-bc.x,bd.geometry.y-bc.y)<=20000).mean();r90=np.quantile(np.hypot(bd.geometry.x-bc.x,bd.geometry.y-bc.y),.9)/1000
 hr=C[inI&(C.n<C.n.max())].n.max()
-TL=['THE TIGHT CLUSTER',f'{int(C.n.max())} wrecks off Cape Henry, {sh20:.0f}% within',f'20 km of the centre, where shipping','converges on the bay mouth;',f'{int(hr)} more at Hampton Roads.']
+legend_box(ia,['THE TIGHT CLUSTER',f'{int(C.n.max())} wrecks off Cape Henry, {sh20:.0f}% within',f'20 km of the centre, where shipping','converges on the bay mouth;',f'{int(hr)} more at Hampton Roads.'],loc=(.98,.03),ha='right',fs=22)
 print('capehenry r90',r90,'sh20',sh20,'HR',hr)
 obm=inbox(P,-76.9,34.4,-74.8,36.6);obn=int(obm.sum());obo=int((obm&(P.cl<0)).sum())
 print('OB',obn,obo)
@@ -71,7 +82,7 @@ from scipy.spatial import cKDTree
 cp=pts[pts.cl>=0];t=cKDTree(np.c_[cp.geometry.x,cp.geometry.y])
 ds=gpd.GeoSeries(gpd.points_from_xy([-75.4],[35.2]),crs=4326).to_crs(E)[0]
 a=a.assign(d=np.hypot(a.geometry.x-ds.x,a.geometry.y-ds.y)).sort_values('d').drop_duplicates('VESSLTERMS')
-a=a[a.VESSLTERMS.str.upper()!='L. MATKOVIC']
+a=a[~a.VESSLTERMS.str.upper().isin(['L. MATKOVIC','USS HURON'])]  # Huron: AWOIS position conflicts with public accounts; label omitted
 FAM={'U-85','U-701','U-576','U-352','CITY OF ATLANTA','EMPIRE GEM','E.M. CLARK','BRITISH SPLENDOUR','DIXIE ARROW','CITY OF NEW YORK','MIRLO','MONITOR','HUNTSVILLE','KASSANDRA LOULOUDIS'}
 HU=HUL.union_all() if hasattr(HUL,'union_all') else HUL.unary_union
 al=a.to_crs(4326).geometry;inA=(al.x>INS[0])&(al.x<INS[2])&(al.y>INS[1])&(al.y<INS[3])
@@ -87,13 +98,6 @@ g=gpd.GeoSeries(gpd.points_from_xy([-75.33],[35.07]),crs=4326).to_crs(E)[0]
 g=gpd.GeoSeries(gpd.points_from_xy([-75.28],[35.04]),crs=4326).to_crs(E)[0]
 ax.text(g.x,g.y,'D I A M O N D   S H O A L S',fontsize=24,family=LAB,color=OX,ha='left',va='center',zorder=10,fontstyle='italic')
 fig.canvas.draw();rend=fig.canvas.get_renderer()
-PX0=ax.transData.transform(np.c_[pts.geometry.x,pts.geometry.y]);bT=None
-for yy in np.arange(.70,.88,.02):
-  for xx in np.arange(.55,.80,.03):
-    legend_box(ax,TL,loc=(xx,yy),ha='right',va='center',fs=22);tb=ax.texts[-1];B=tb.get_window_extent(rend)
-    k=((PX0[:,0]>B.x0)&(PX0[:,0]<B.x1)&(PX0[:,1]>B.y0)&(PX0[:,1]<B.y1)).sum()+100*sum(B.overlaps(o.get_window_extent(rend)) for o in ax.texts[:-1])+100*sum(B.overlaps(g.get_window_extent()) for g in ax.images);tb.remove()
-    if bT is None or k<bT[0]:bT=(k,xx,yy)
-print('TIGHT',bT);legend_box(ax,TL,loc=(bT[1],bT[2]),ha='right',va='center',fs=22)
 PX=ax.transData.transform(np.c_[pts.geometry.x,pts.geometry.y])
 def cov(bb):return ((PX[:,0]>bb.x0-15)&(PX[:,0]<bb.x1+15)&(PX[:,1]>bb.y0-15)&(PX[:,1]<bb.y1+15)).sum()
 cb=None
@@ -103,9 +107,10 @@ for yy in np.arange(.3,.66,.02):
     k=(np.hypot(PX[:,0]-c[0],PX[:,1]-c[1])<r).sum()+5*sum(mt.Bbox.from_extents(c[0]-r,c[1]-r,c[0]+r,c[1]+r*1.4).overlaps(o.get_window_extent(rend)) for o in ax.texts)
     if cb is None or k<cb[0]:cb=(k,xx,yy)
 print('compass',cb)
+cb=(0,.935,.635);print('compass fixed',cb)
 compass(ax,cb[1],cb[2],.042)
 
-legend_box(ax,['CAVEATS','Charted/recorded wrecks only: most losses were never','located or were buried by shifting shoals. Clusters','also reflect survey effort. Some points may be','artificial reefs. AWOIS: 2016 snapshot.'],loc=(.985,.012),ha='right',va='bottom',fs=22)
+# caveats box removed (v4b): caveats live in caption.md methods reply 3
 gO=gpd.GeoSeries(gpd.points_from_xy([-75.5],[35.45]),crs=4326).to_crs(E)[0]
 bestO=None
 for yy in np.arange(.2,.66,.02):
@@ -128,8 +133,8 @@ for r in a.itertuples():
         if axb.contains(bb.x0,bb.y0) and axb.contains(bb.x1,bb.y1) and not any(bb.overlaps(o) for o in placed+gb):
             placed.append(bb);nl+=1;break
         tx.remove()
-fig.text(40/W,1-30/H,'Graveyards of the Atlantic',fontsize=110,family=TITLE,color=OX,va='top')
-fig.text(44/W,1-175/H,'Chesapeake to Cape Lookout: one tight cluster, one scattered graveyard',fontsize=44,family=LAB,color=BLK,va='top')
+fig.text(40/W,1-16/H,'Graveyards of the Atlantic',fontsize=110,family=TITLE,color=OX,va='top')
+fig.text(44/W,1-232/H,'Chesapeake to Cape Lookout: one tight cluster, one scattered graveyard',fontsize=44,family=LAB,color=BLK,va='top')
 fig.text(40/W,1-2862/H,f'Methods: {tot:,} wrecks in frame · glow = wreck density, Gaussian KDE 5 km (hidden beyond 200 m depth) · clusters = regional DBSCAN, eps 5 km, min 6 (EPSG:5070) · hull = convex hull + 1.5 km',fontsize=19,family=NUM,color=BLK,va='top')
 fig.text(40/W,1-2905/H,'Data: NOAA Office of Coast Survey (ENC, AWOIS) · NOAA ONMS · NOAA NCEI (CRM, ETOPO 2022) · Natural Earth · US Census Bureau',fontsize=22,family=NUM,color=BLK,va='top')
 fig.text(40/W,1-2945/H,'Map: @funkchan · #30DayMapChallenge Day 4: Clusters',fontsize=22,family=NUM,color=OX,va='top',fontweight='bold')
@@ -149,7 +154,7 @@ def samp(fn):
     dz=xr.open_dataset(fn);zv=[v for v in dz.data_vars if dz[v].ndim==2][0];Z=dz[zv];la=Z[Z.dims[0]].values;lo=Z[Z.dims[1]].values;lo=np.where(lo>180,lo-360,lo);Zv=Z.values.astype(float)
     ii=np.round((LA-la[0])/(la[1]-la[0])).astype(int);jj=np.round((LO-lo[0])/(lo[1]-lo[0])).astype(int)
     ok=(ii>=0)&(ii<len(la))&(jj>=0)&(jj<len(lo));out=np.full(LA.shape,np.nan);out[ok]=Zv[ii[ok],jj[ok]];return out
-CR=samp('data/crm2.nc');ET=samp('data/et_N45W090.nc');E2=samp('data/et_N45W075.nc');ET=np.where(np.isnan(ET),E2,ET)
+CR=samp(os.path.join(_ROOT,'data','crm2.nc'));ET=samp(os.path.join(_ROOT,'data','et_N45W090.nc'));E2=samp(os.path.join(_ROOT,'data','et_N45W075.nc'));ET=np.where(np.isnan(ET),E2,ET)
 DZ=np.where(np.isnan(CR)|(CR<-200),ET,CR);D=np.where(DZ<0,-DZ,np.nan)
 print('cells from CRM %.0f%%'%(100*np.mean(~np.isnan(CR)&(CR>=-200)&(DZ<0))/max(np.mean(DZ<0),1e-9)))
 LV=[0,5,10,20,50,100,200,1000,2000,3000,5000]
@@ -175,14 +180,14 @@ ax.set_xlim(X0,X1);ax.set_ylim(Y0,Y1);print('KDE peak/km2',round(K.max(),3));ax.
 # outliers: depth-aware colour (bone beyond 200 m)
 O=P[P.cl<0];oi=np.clip(((O.geometry.y-Y0)/gs).astype(int),0,D.shape[0]-1);oj=np.clip(((O.geometry.x-X0)/gs).astype(int),0,D.shape[1]-1)
 od=np.nan_to_num(D[oi,oj],nan=0);deep=od>200;print('deep outliers',int(deep.sum()))
-for axx,m_ in ((ax,np.ones(len(O),bool)),):
+for axx,m_ in ((ax,~inINS[O.index]),(ia,np.ones(len(O),bool))):
     sh=O[m_&~deep];dp=O[m_&deep]
     axx.scatter(sh.geometry.x,sh.geometry.y,s=170,marker='x',c=OUTC,alpha=.85,lw=2.2,zorder=4.6,path_effects=[pe.withStroke(linewidth=3.5,foreground=BONE)])
     axx.scatter(dp.geometry.x,dp.geometry.y,s=170,marker='x',c='#F1E4C3',lw=2.2,zorder=4.6,path_effects=[pe.withStroke(linewidth=3.6,foreground='#1F2A2C')])
-
+ia.set_xlim(ei[0],ei[2]);ia.set_ylim(ei[1],ei[3])
 # symbol key above caveat box
-fig.canvas.draw();cvb=[t for t in ax.texts if t.get_text().startswith('CAVEATS')][0].get_window_extent(rend)
-kw_,kh_=820,150;kx=cvb.x1-kw_;ky=cvb.y1+18
+fig.canvas.draw();axb_=ax.get_window_extent()
+kw_,kh_=820,150;kx=axb_.x1-kw_-18;ky=axb_.y0+18
 ka=fig.add_axes([kx/W,ky/H,kw_/W,kh_/H]);ka.set_xlim(0,kw_);ka.set_ylim(0,kh_);ka.axis('off')
 ka.add_patch(plt.matplotlib.patches.FancyBboxPatch((4,4),kw_-8,kh_-8,boxstyle='round,pad=0,rounding_size=12',fc=BONE,ec=OX,lw=2.2))
 yy1,yy2=105,42;fk=dict(fontsize=22,family=NUM,color=BLK,va='center')
@@ -201,8 +206,19 @@ for t in ax.texts:
         if k: print('BOX COVERS',k,repr(t.get_text()[:20]))
 cx,cy=ax.transAxes.transform((cb[1],cb[2]));r=.07*axb.width
 print('compass covers',(np.hypot(px[:,0]-cx,px[:,1]-cy)<r).sum())
-fig.savefig('outputs/day04_v4_noinset.png',dpi=100,facecolor=PARCH)
-from PIL import Image;Image.open('outputs/day04_v4_noinset.png').resize((1200,1500),Image.LANCZOS).save('outputs/day04_v4_noinset_1200.png')
+fig.canvas.draw();_r=fig.canvas.get_renderer()
+_cl=set(cl_);_oth=[t for t in ax.texts if t not in _cl]
+for t in list(cl_):
+    b_=t.get_window_extent(_r)
+    if any(b_.overlaps(o.get_bbox_patch().get_window_extent(_r) if o.get_bbox_patch() else o.get_window_extent(_r)) for o in _oth):t.remove();print('drop isobath label',t.get_text())
+_t=fig.texts[0].get_window_extent(_r);_s=fig.texts[1].get_window_extent(_r);print('HEADER title bottom px',H-_t.y0,'subtitle top px',H-_s.y1,'gap',_s.y1 and _t.y0-_s.y1,'subtitle bottom',H-_s.y0,'map top',H-ax.get_window_extent().y1)
+_all=[t for t in fig.texts]+[t for a_ in fig.axes for t in a_.texts if t.get_visible() and t.get_text().strip() and t.axes is not None]
+_bb=[(t,(t.get_bbox_patch().get_window_extent(_r) if t.get_bbox_patch() else t.get_window_extent(_r))) for t in _all]
+for i in range(len(_bb)):
+  for j in range(i+1,len(_bb)):
+    if _bb[i][1].overlaps(_bb[j][1]):print('OVERLAP',repr(_bb[i][0].get_text()[:25]),repr(_bb[j][0].get_text()[:25]))
+fig.savefig(os.path.join(_ROOT,'outputs','day04_final_v4.png'),dpi=100,facecolor=PARCH)
+from PIL import Image;Image.open(os.path.join(_ROOT,'outputs','day04_final_v4.png')).resize((1200,1500),Image.LANCZOS).save(os.path.join(_ROOT,'outputs','day04_final_v4_1200.png'))
 print(tot,ob,nl,len(a))
 
 print('PLACED',sorted(t.get_text() for t in ax.texts if t.get_text().startswith('†')))

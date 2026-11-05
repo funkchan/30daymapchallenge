@@ -1,24 +1,47 @@
-import numpy as np,pandas as pd,geopandas as gpd,matplotlib,glob
+import os,glob
+import numpy as np,pandas as pd,geopandas as gpd,matplotlib
 matplotlib.use('Agg');import matplotlib.pyplot as plt
 from matplotlib import font_manager as fm
 from matplotlib.offsetbox import OffsetImage,AnnotationBbox
 from shapely.geometry import box
-for f in glob.glob('glyphs/fonts/*.ttf')+glob.glob('/usr/share/fonts/truetype/sand-box/google/Alegreya Sans/*.ttf'):fm.fontManager.addfont(f)
-TITLE='Pirata One';LAB='IM FELL English';NUM='Alegreya Sans'
+ROOT=os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)),'..'))
+os.chdir(ROOT)
+_BUNDLED=os.path.join(ROOT,'glyphs','fonts')
+FONT_DIR=os.environ.get('FONT_DIR') or _BUNDLED
+_font_dirs=[FONT_DIR]
+if os.path.abspath(FONT_DIR)!=os.path.abspath(_BUNDLED):
+    _font_dirs.append(_BUNDLED)
+_fonts=[]
+for _d in _font_dirs:
+    _fonts.extend(sorted(glob.glob(os.path.join(_d,'*.ttf'))))
+for f in _fonts:fm.fontManager.addfont(f)
+def _families(paths):
+    names=[]
+    for f in paths:
+        n=fm.FontProperties(fname=f).get_name()
+        if n not in names:names.append(n)
+    return names
+_names=_families(_fonts)
+def _pick(name,fallback):
+    return name if name in _names else fallback
+TITLE=_pick('Pirata One','Pirata One')
+LAB=_pick('IM FELL English','IM FELL English')
+_extra=[n for n in _names if n not in (TITLE,LAB)]
+NUM=_extra[0] if _extra else LAB
 BLK='#17120E';OX='#7A1A1A';BR='#B8893A';BONE='#F1E4C3';PARCH='#E8D4A2';STAIN='#DCC38B';MID='#B8995F'
 SEA='#EFE2BC';LAND=STAIN
-E=5070;GL={t:plt.imread(f'glyphs/wreck_t{t}.png') for t in (1,2,3,4)}
+E=5070;GL={t:plt.imread(os.path.join(ROOT,'glyphs',f'wreck_t{t}.png')) for t in (1,2,3,4)}
 SZ={1:90,2:120,3:155,4:200}
-D='data/'
+D=os.path.join(ROOT,'data')+os.sep
 pts=gpd.read_file(D+'merged_l48.gpkg').to_crs(E)
 cl=pd.read_csv(D+'clusters.csv',index_col=0)
 cg=gpd.GeoDataFrame(cl,geometry=gpd.points_from_xy(cl.lon,cl.lat),crs=4326).to_crs(E)
 us=gpd.read_file(D+'cb_2023_us_state_500k.shp').to_crs(E)
-ne=gpd.read_file('../day03-polygons-shapes/data/ne_10m_land.shp')
+ne=gpd.read_file(D+'ne_10m_land.shp')
 ne=ne.clip(box(-130,20,-60,52)).to_crs(E)
-lakes=gpd.read_file(D+'ne_10m_lakes.shp');lakes=lakes[lakes.scalerank<=3].clip(box(-130,20,-60,52)).to_crs(E)
-b200=gpd.read_file(D+'ne_10m_bathymetry_K_200.shp').clip(box(-130,20,-60,52)).to_crs(E)
-aw_all=gpd.read_file(D+'awois/2020445569/aw/AWOIS_Wrecks.shp').to_crs(E)
+lakes=gpd.read_file(os.path.join(D,'ne_10m_lakes.shp'));lakes=lakes[lakes.scalerank<=3].clip(box(-130,20,-60,52)).to_crs(E)
+b200=gpd.read_file(os.path.join(D,'ne_10m_bathymetry_K_200.shp')).clip(box(-130,20,-60,52)).to_crs(E)
+aw_all=gpd.read_file(os.path.join(D,'awois/2020445569/aw/AWOIS_Wrecks.shp')).to_crs(E)
 def ext(lo0,la0,lo1,la1):
     g=gpd.GeoSeries([box(lo0,la0,lo1,la1)],crs=4326).to_crs(E).total_bounds;return g
 def inbox(g,lo0,la0,lo1,la1):

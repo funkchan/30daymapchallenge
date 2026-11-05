@@ -1,4 +1,5 @@
-import json,urllib.request,time,sys
+import os,json,urllib.request,time,sys
+os.chdir(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)),'..')))
 B="https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_%s/MapServer/%d/query"
 def get(u,tries=6):
     for i in range(tries):

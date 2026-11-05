@@ -1,9 +1,10 @@
+import os,sys
+_ROOT=os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)),'..'))
+os.chdir(_ROOT)
+sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
 import matplotlib.patheffects as pe
 import matplotlib.transforms as mt
-import os
 ARROW=os.environ.get('ARROW','1')=='1'
-import matplotlib.transforms as mt
-import os
 MODE=os.environ.get('MODE','x')
 from pirate import *
 W,H=2400,3000;fig=plt.figure(figsize=(24,30),dpi=100);fig.patch.set_facecolor(PARCH)
@@ -180,7 +181,7 @@ def samp(fn):
     dz=xr.open_dataset(fn);zv=[v for v in dz.data_vars if dz[v].ndim==2][0];Z=dz[zv];la=Z[Z.dims[0]].values;lo=Z[Z.dims[1]].values;lo=np.where(lo>180,lo-360,lo);Zv=Z.values.astype(float)
     ii=np.round((LA-la[0])/(la[1]-la[0])).astype(int);jj=np.round((LO-lo[0])/(lo[1]-lo[0])).astype(int)
     ok=(ii>=0)&(ii<len(la))&(jj>=0)&(jj<len(lo));out=np.full(LA.shape,np.nan);out[ok]=Zv[ii[ok],jj[ok]];return out
-CR=samp('data/crm2.nc');ET=samp('data/et_N45W090.nc');E2=samp('data/et_N45W075.nc');ET=np.where(np.isnan(ET),E2,ET)
+CR=samp(os.path.join(_ROOT,'data','crm2.nc'));ET=samp(os.path.join(_ROOT,'data','et_N45W090.nc'));E2=samp(os.path.join(_ROOT,'data','et_N45W075.nc'));ET=np.where(np.isnan(ET),E2,ET)
 DZ=np.where(np.isnan(CR)|(CR<-200),ET,CR);D=np.where(DZ<0,-DZ,np.nan)
 print('cells from CRM %.0f%%'%(100*np.mean(~np.isnan(CR)&(CR>=-200)&(DZ<0))/max(np.mean(DZ<0),1e-9)))
 LV=[0,5,10,20,50,100,200,1000,2000,3000,5000]
@@ -213,7 +214,7 @@ def _rect(x0,y0,x1,y1,ang):
 SK=MP.make_compound_path(_rect(-.95,-.11,.95,.11,.62),_rect(-.95,-.11,.95,.11,-.62),_c(0,.18,.52),_rect(-.27,-.42,.27,-.1,0),_c(-.2,.2,.15,True),_c(.2,.2,.15,True))
 OM=SK if MODE=='skulls' else 'x'
 from matplotlib.offsetbox import OffsetImage,AnnotationBbox
-SKPX=int(os.environ.get('SKPX','22'));_SKI={k:plt.imread(f'glyphs/skulls_gd/skull_{k}_40.png') for k in ('ink','bone')}
+SKPX=int(os.environ.get('SKPX','22'));_SKI={k:plt.imread(os.path.join(_ROOT,'glyphs','skulls_gd',f'skull_{k}_40.png')) for k in ('ink','bone')}
 def omark(axx,x,y,deep,s_=170):
     im=_SKI['bone' if deep else 'ink']
     for xx,yy in zip(np.atleast_1d(np.asarray(x)),np.atleast_1d(np.asarray(y))):
@@ -228,9 +229,9 @@ for axx,m_ in ((ax,~inINS[O.index]),(ia,np.ones(len(O),bool))):
 _OD=(O,deep);ia.apply_aspect();IX=ia.get_xlim();IY=ia.get_ylim();print('INSET lims',IX,IY,ei)
 gx2=np.arange(IX[0],IX[1],60);gy2=np.arange(IY[0],IY[1],60);GX2,GY2=np.meshgrid(gx2,gy2)
 LO2,LA2=Transformer.from_crs(E,4326,always_xy=True).transform(GX2,GY2)
-dz=xr.open_dataset('data/crm2.nc');zv=[v_ for v_ in dz.data_vars if dz[v_].ndim==2][0];Z=dz[zv];la_=Z[Z.dims[0]].values;lo_=Z[Z.dims[1]].values;Zv=Z.values.astype(float)
+dz=xr.open_dataset(os.path.join(_ROOT,'data','crm2.nc'));zv=[v_ for v_ in dz.data_vars if dz[v_].ndim==2][0];Z=dz[zv];la_=Z[Z.dims[0]].values;lo_=Z[Z.dims[1]].values;Zv=Z.values.astype(float)
 ii=np.clip(np.round((LA2-la_[0])/(la_[1]-la_[0])).astype(int),0,len(la_)-1);jj=np.clip(np.round((LO2-lo_[0])/(lo_[1]-lo_[0])).astype(int),0,len(lo_)-1)
-Z2=Zv[ii,jj];_LA,_LO=LA,LO;LA,LO=LA2,LO2;_e=samp('data/et_N45W075.nc');_e2=samp('data/et_N45W090.nc');_e=np.where(np.isnan(_e),_e2,_e);LA,LO=_LA,_LO;print('INSET crm nan',np.isnan(Z2).mean());Z2=np.where(np.isnan(Z2),_e,Z2);D2=np.where(Z2<0,-Z2,np.nan);print('INSET depth pct<20m',np.nanmean(D2<20),'bands main-tint share',[round(np.nanmean((D2>=a_)&(D2<b_)),2) for a_,b_ in zip(LV[:-1],LV[1:])][:5])
+Z2=Zv[ii,jj];_LA,_LO=LA,LO;LA,LO=LA2,LO2;_e=samp(os.path.join(_ROOT,'data','et_N45W075.nc'));_e2=samp(os.path.join(_ROOT,'data','et_N45W090.nc'));_e=np.where(np.isnan(_e),_e2,_e);LA,LO=_LA,_LO;print('INSET crm nan',np.isnan(Z2).mean());Z2=np.where(np.isnan(Z2),_e,Z2);D2=np.where(Z2<0,-Z2,np.nan);print('INSET depth pct<20m',np.nanmean(D2<20),'bands main-tint share',[round(np.nanmean((D2>=a_)&(D2<b_)),2) for a_,b_ in zip(LV[:-1],LV[1:])][:5])
 LVi=[0,2,5,10,15,20,30,50,100];dcmi=ListedColormap(DC[:8]);dni=BoundaryNorm(LVi,dcmi.N)
 rgb2=dcmi(dni(np.clip(np.nan_to_num(D2,nan=0),0,99)))[...,:3];hs2=LightSource(315,45).hillshade(np.nan_to_num(-D2,nan=0),vert_exag=6,dx=60,dy=60)
 rgb2=rgb2*(0.85+0.15*hs2[...,None])
@@ -344,8 +345,8 @@ for _k in range(60):
 fig.canvas.draw();b_=_vb.get_window_extent();print('VB gap to frame px',round(_r0[1]-b_.y1,1),'top',b_.y1,'frame',_r0[1])
 # inset tight-cluster box vs galleon/badge
 _cbb=_co.get_bbox_patch().get_window_extent();_ap_=ax.transData.transform(np.c_[pts.geometry.x,pts.geometry.y]);print('SCATTERED box covers marks',int(((_ap_[:,0]>_cbb.x0)&(_ap_[:,0]<_cbb.x1)&(_ap_[:,1]>_cbb.y0)&(_ap_[:,1]<_cbb.y1)).sum()))
-fig.savefig(f"outputs/day04_v6_{'arrow' if ARROW else 'noarrow'}.png" ,dpi=100,facecolor=PARCH)
-from PIL import Image;_f=f"outputs/day04_v6_{'arrow' if ARROW else 'noarrow'}.png";Image.open(_f).resize((1200,1500),Image.LANCZOS).save(_f.replace('.png','_1200.png'))
+fig.savefig(os.path.join(_ROOT,'outputs',f"day04_v6_{'arrow' if ARROW else 'noarrow'}.png"),dpi=100,facecolor=PARCH)
+from PIL import Image;_f=os.path.join(_ROOT,'outputs',f"day04_v6_{'arrow' if ARROW else 'noarrow'}.png");Image.open(_f).resize((1200,1500),Image.LANCZOS).save(_f.replace('.png','_1200.png'))
 print(tot,ob,nl,len(a))
 
 _sk=_SKB();_cl=[]

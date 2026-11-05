@@ -1,11 +1,40 @@
-# Day 4 (Clusters): Graveyards of the Sea, US shipwreck clusters
+# Day 4 (Clusters): Graveyards of the Atlantic, US shipwreck clusters
 
-## FINAL: v6 (`render_h.py` → `outputs/day04_v6.png`, `_1200.png`)
-Skull-and-crossbones outlier marks (`glyphs/skulls_gd/`, 20 px, ink ≤200 m, bone beyond). The Chesapeake inset is shaded by water depth (CRM 3″) with 5/10/20 m isobaths. The callout is shorter. The key shows the four ship tiers. Crops: `outputs/day04_v6_crop_{hatteras,inset,key}.png`. Earlier versions (v1–v5) are in `outputs/archive/`. `render_e.py` (v4) and `render_f.py` (no inset) are kept for reference.
+## FINAL: v6 (`scripts/render_h.py` → `outputs/day04_v6.png`, `outputs/day04_v6_1200.png`)
+Skull-and-crossbones outlier marks (`glyphs/skulls_gd/`, 20 px, ink ≤200 m, bone beyond). The Chesapeake inset is shaded by water depth (CRM 3″) with 5/10/20 m isobaths. The callout is shorter. The key shows the four ship tiers. Crops: `outputs/day04_v6_crop_hatteras.png`, `outputs/day04_v6_crop_inset.png`, `outputs/day04_v6_crop_key.png`, and `outputs/day04_v6_preview600.png`. Earlier renders are not in the repo. `scripts/render_e.py` (v4) and `scripts/render_f.py` (no inset) are kept for reference; their PNGs are not committed.
+
+## Local data
+`data/` is gitignored. Land comes from this folder's own Natural Earth 10m land shapefile, `data/ne_10m_land.shp` (public domain). Download it locally:
+
+```
+mkdir -p data
+curl -L -o /tmp/ne_10m_land.zip https://naciscdn.org/naturalearth/10m/physical/ne_10m_land.zip
+unzip -o /tmp/ne_10m_land.zip -d data
+```
+
+`scripts/pirate.py` also expects `data/ne_10m_lakes.shp`, `data/ne_10m_bathymetry_K_200.shp`, `data/cb_2023_us_state_500k.shp`, and `data/awois/2020445569/aw/AWOIS_Wrecks.shp`. `scripts/merge_cluster.py` writes `data/merged_l48.gpkg` and `data/clusters.csv`. Depth rasters (`data/crm2.nc`, `data/et_*.nc`) stay local and are not committed.
+
+## Fonts
+Scripts read `.ttf` files from the `FONT_DIR` environment variable. If `FONT_DIR` is unset, they use the bundled faces in `glyphs/fonts/` (Pirata One and IM Fell English, SIL OFL). Those bundled faces are still loaded when `FONT_DIR` points somewhere else, so the title and labels resolve. No system font path is used. A third family in `FONT_DIR` is used for numbers. The posted map used Alegreya Sans (SIL OFL) for numbers; that face is not bundled. Without a third family, numbers use IM Fell English.
+
+```
+FONT_DIR=/path/to/fonts python scripts/render_h.py
+```
+
+## Run
+Each script changes to this folder on startup, so `data/`, `glyphs/` and `outputs/` resolve here from any working directory. Packages are listed in `requirements.txt`.
+
+```
+python scripts/fetch.py coastal:33 general:29
+python scripts/merge_cluster.py
+python scripts/render_h.py
+```
+
+Glyph generators stay next to their art: `glyphs/make_glyphs.py` and `glyphs/skulls_gd/make_skulls.py`.
 
 ## Earlier: Version B (4 Nov)
-- `outputs/day04_final.png` (2400×3000) and `outputs/day04_final_1200.png`: "The Graveyard of the Atlantic", Virginia Beach to Cape Lookout.
-- Built by `render_b.py`, using the shared styling in `pirate.py`. Data comes from `merge_cluster.py`, which writes `data/merged_l48.gpkg` and `data/clusters.csv`.
+- Regional draft of Virginia Beach to Cape Lookout, titled "The Graveyard of the Atlantic". The PNG is not in the repo.
+- Shared styling is `scripts/pirate.py`. `scripts/merge_cluster.py` writes `data/merged_l48.gpkg` and `data/clusters.csv`.
 - Numbers:
   - 405 wrecks in the frame.
   - Clusters at Virginia Beach (171) and Hatteras/Diamond Shoals (36).
@@ -14,42 +43,42 @@ Skull-and-crossbones outlier marks (`glyphs/skulls_gd/`, 20 px, ink ≤200 m, bo
 - The caption, methods replies and alt text are in `caption.md`. Sources are in `SOURCES_AND_CREDITS.md`.
 
 ## Pipeline
-1. `fetch.py`: ENC Direct wreck points. The AWOIS 2016 snapshot comes from the Library of Congress archive.
-2. `merge_cluster.py`:
+1. `scripts/fetch.py`: ENC Direct wreck points. The AWOIS 2016 snapshot comes from the Library of Congress archive.
+2. `scripts/merge_cluster.py`:
    - Merges ENC coastal wrecks, ENC general wrecks more than 1 km from coastal, and AWOIS records more than 1 km from ENC.
    - Lower 48 total: 8,226.
    - DBSCAN in EPSG:5070 with eps 20 km and at least 30 wrecks, giving 35 clusters holding 4,516 wrecks.
-3. `render_b.py` (final) and `render_a.py`: Version A, the national insets version, not chosen (`outputs/day04_A_insets*.png`).
+3. Later renders. The national-insets poster and the first regional render scripts are not in the repo. Kept scripts: `scripts/render_e.py`, `scripts/render_f.py`, `scripts/render_h.py`.
 
 Glyphs and fonts are in `glyphs/`. NatGeo's "Ghost Fleet" map was used only for verification; nothing was traced from it.
 
-## v2 (4 Nov PM): `outputs/day04_final_v2.png` and `_1200.png`, built by `render_c.py` (`render_b.py` and its outputs are untouched)
-- Regional DBSCAN on the 405 wrecks in the frame: eps 5 km, min 6, giving 9 clusters. Glyph tiers by count: t1 ≤8, t2 9–19, t3 20–49, t4 ≥50.
+## v2 (4 Nov PM)
+Regional DBSCAN on the 405 wrecks in the frame: eps 5 km, min 6, giving 9 clusters. Glyph tiers by count: t1 ≤8, t2 9–19, t3 20–49, t4 ≥50. The v2 render script and PNG are not in the repo.
 - Density glow: Gaussian KDE on a 500 m grid, 5 km bandwidth, ember ramp, clipped to sea.
 - Depth: CRM Vol 2 (≤200 m) and ETOPO 2022 15″ (deeper water and gaps), with hillshade, stepped tints and isobaths at 10/20/50/100/200/1000/2000 m. The rasters (`data/crm2.nc` 93 MB, `data/et_*.nc`) are **not** for the repo.
 - Ship names are prefixed with † in italic sepia; places are in red capitals.
 
-## v3 (4 Nov, approved direction): `outputs/day04_final_v3.png` and `_1200.png`, built by `render_d.py` (v1, v2 and B are untouched)
-- Story: two kinds of graveyard. A tight cluster at the Chesapeake mouth (Cape Henry 82, 90% within 20 km of the centre; Hampton Roads 23), shown in a zoom inset. The scattered Outer Banks: 156 of 177 wrecks are DBSCAN outliers.
+## v3 (4 Nov, approved direction)
+Story: two kinds of graveyard. A tight cluster at the Chesapeake mouth (Cape Henry 82, 90% within 20 km of the centre; Hampton Roads 23), shown in a zoom inset. The scattered Outer Banks: 156 of 177 wrecks are DBSCAN outliers. The v3 render script and PNG are not in the repo.
 - Additions: dashed convex hulls (buffered 1.5 km), red + for clustered wrecks vs. grey × for outliers, glow hidden beyond 200 m depth, larger isobath labels, stronger halos on † ship names, and the shortened data credit.
 - `pirate.basemap` gained optional kwargs (`outc`, `outa`, `outlw`, `cg_`); the defaults reproduce the older renders.
 
-## v4 (render_e.py → outputs/day04_final_v4.png, _1200.png)
-v4 design fixes: the header legend is replaced by a symbol key at bottom-right and a methods line above the credits. The main-map Chesapeake area shows only the frame and glow, with a leader to the inset. Inset: + marks in the 82 hull are faded, the 11 and 23 badges sit on leaders, glyphs get a parchment halo, and glyph size is capped. All three boxes share one style, and Legend vs. Chart is folded into the scattered-graveyard callout. Outliers deeper than 200 m are drawn in bone. † names are limited to wrecks within 5 km of a cluster hull plus well-known AWOIS wrecks, in a lighter ink. The compass is about 70% of its old size.
+## v4 (`scripts/render_e.py`)
+The v4 PNG is not committed. v4 design fixes: the header legend is replaced by a symbol key at bottom-right and a methods line above the credits. The main-map Chesapeake area shows only the frame and glow, with a leader to the inset. Inset: + marks in the 82 hull are faded, the 11 and 23 badges sit on leaders, glyphs get a parchment halo, and glyph size is capped. All three boxes share one style, and Legend vs. Chart is folded into the scattered-graveyard callout. Outliers deeper than 200 m are drawn in bone. † names are limited to wrecks within 5 km of a cluster hull plus well-known AWOIS wrecks, in a lighter ink. The compass is about 70% of its old size.
 
 ### v4 correctness pass (2026-11-04)
 - I recomputed everything from data/merged_l48.gpkg. Result: 405 wrecks in the frame. DBSCAN (eps 5 km, min 6, EPSG:5070) gives 9 clusters: 82, 23, 11, 9, 8, 6, 6, 6, 6.
 - Cape Henry: 88% of its wrecks lie within 20 km of the centroid (r90 = 20.3 km). The callout text now says 88%.
 - Outer Banks figures use the box 76.9–74.8°W, 34.4–36.6°N (Currituck to Cape Lookout, including the sounds). The same box gives both the callout count and the Legend vs. chart count: 177 wrecks, 156 of them outliers (88%).
 - Ship names are now cased properly (USS, U-numbers, initials).
-- USS Huron: the AWOIS position (36.495N, 75.85W, off Corolla) is about 55 km north of the wreck site given in public accounts (off Nags Head, ~35.98N). The wreck point is kept but its label is omitted (render_e.py).
-- Alternate version: render_f.py writes outputs/day04_v4_noinset.png. It has no inset; the Chesapeake clusters are drawn in place, with glyphs on offset leaders.
+- USS Huron: the AWOIS position (36.495N, 75.85W, off Corolla) is about 55 km north of the wreck site given in public accounts (off Nags Head, ~35.98N). The wreck point is kept but its label is omitted (`scripts/render_e.py`).
+- Alternate version: `scripts/render_f.py` has no inset. The Chesapeake clusters are drawn in place, with glyphs on offset leaders. Its PNG is not committed.
 
 ### v4 layout update (2026-11-04)
 - The zoom inset moved to the top-right deep water, level with the Chesapeake source frame, so its leader line is shorter. The compass sits in the top-right corner just below the inset; there was no room beside it. The caveats box was removed; the caveats are now in methods reply 3 in caption.md. The symbol key moved into the bottom-right corner.
 
 ## v5/v6 (2026-11-04)
-- v5: added inset depth bands and isobaths. Dropped the legend-vs-chart sentence from the scattered-graveyard callout. The inset now covers 4 outliers (all deep) instead of 13.
+- v5: added inset depth bands and isobaths. Dropped the legend-vs-chart sentence from the scattered-graveyard callout. The inset now covers 4 outliers (all deep) instead of 13. The v5 PNGs are not in the repo.
 - v6: skull icons placed at native 20 px via AnnotationBbox. In the Diamond Shoals scatter (43 outliers), 10 pairs overlap at 20 px and 6 by more than half; 18 px leaves 10 pairs, 4 by more than half, so 20 px is kept.
 
 ### v6 final fixes (2026-11-04, funkchan OK'd)
@@ -73,4 +102,4 @@ v4 design fixes: the header legend is replaced by a symbol key at bottom-right a
 - Key ship-tier icons ×1.5 (relative tier sizes kept); key now 1176×394 px, covers 2 marks.
 
 ## v6 final layout
-Final = variant B: no callout arrow; THE SCATTERED GRAVEYARD callout sits in open ocean off the Outer Banks, clear of the key; THE TIGHT CLUSTER strip sits under the inset; compass in deep water. Place names carry parchment halos; glow inside the Chesapeake source frame dimmed 30% (display only, KDE unchanged). Arrow variant kept in outputs/archive/. The methods line was removed from the image (methods live in the caption.md replies) and the map frame extended down into that space; only the two credit lines remain below the map.
+Final = variant B: no callout arrow; THE SCATTERED GRAVEYARD callout sits in open ocean off the Outer Banks, clear of the key; THE TIGHT CLUSTER strip sits under the inset; compass in deep water. Place names carry parchment halos; glow inside the Chesapeake source frame dimmed 30% (display only, KDE unchanged). The arrow variant is not kept in the repo. The methods line was removed from the image (methods live in the caption.md replies) and the map frame extended down into that space; only the two credit lines remain below the map.

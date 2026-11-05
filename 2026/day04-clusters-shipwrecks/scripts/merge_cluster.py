@@ -1,12 +1,14 @@
+import os
+os.chdir(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)),'..')))
 import numpy as np,pandas as pd,geopandas as gpd
 from scipy.spatial import cKDTree
 from sklearn.cluster import DBSCAN
-a=gpd.read_file('data/coastal_33.geojson');a['src']='ENC coastal'
-b=gpd.read_file('data/general_29.geojson');b['src']='ENC general'
+a=gpd.read_file(os.path.join('data','coastal_33.geojson'));a['src']='ENC coastal'
+b=gpd.read_file(os.path.join('data','general_29.geojson'));b['src']='ENC general'
 E=5070
 A=a.to_crs(E);B=b.to_crs(E);t=cKDTree(np.c_[A.geometry.x,A.geometry.y]);dd,_=t.query(np.c_[B.geometry.x,B.geometry.y])
 enc=pd.concat([A,B[dd>1000]],ignore_index=True);enc['name']=enc.OBJNAM
-aw=gpd.read_file('data/awois/2020445569/aw/AWOIS_Wrecks.shp').to_crs(E)
+aw=gpd.read_file(os.path.join('data','awois','2020445569','aw','AWOIS_Wrecks.shp')).to_crs(E)
 t=cKDTree(np.c_[enc.geometry.x,enc.geometry.y]);dd,_=t.query(np.c_[aw.geometry.x,aw.geometry.y])
 aw=aw[dd>1000].copy();aw['src']='AWOIS';aw['name']=aw.VESSLTERMS.where(aw.VESSLTERMS.fillna('UNKNOWN').str.upper()!='UNKNOWN')
 aw['year']=pd.to_numeric(aw.YEARSUNK,errors='coerce')
@@ -24,4 +26,4 @@ c=gpd.GeoSeries(s.geometry.apply(lambda q:q.union_all().centroid),crs=E).to_crs(
 o['score']=(o.n.rank(pct=True)+o.dens.rank(pct=True))/2
 o['tier']=pd.cut(o.score,[0,.4,.65,.85,1.01],labels=[1,2,3,4]).astype(int)
 o=o.sort_values('n',ascending=False);print('clusters',len(o),'in',(L.cl>=0).sum());print(o.round(2).to_string())
-L.to_crs(4326).to_file('data/merged_l48.gpkg');o.to_csv('data/clusters.csv')
+L.to_crs(4326).to_file(os.path.join('data','merged_l48.gpkg'));o.to_csv(os.path.join('data','clusters.csv'))
