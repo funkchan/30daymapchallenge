@@ -2,6 +2,8 @@ import os,sys
 _ROOT=os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)),'..'))
 os.chdir(_ROOT)
 sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
+_SCRATCH=os.path.join(_ROOT,'outputs','scratch')
+os.makedirs(_SCRATCH,exist_ok=True)
 import matplotlib.transforms as mt
 from pirate import *
 W,H=2400,3000;fig=plt.figure(figsize=(24,30),dpi=100);fig.patch.set_facecolor(PARCH)
@@ -217,8 +219,8 @@ _bb=[(t,(t.get_bbox_patch().get_window_extent(_r) if t.get_bbox_patch() else t.g
 for i in range(len(_bb)):
   for j in range(i+1,len(_bb)):
     if _bb[i][1].overlaps(_bb[j][1]):print('OVERLAP',repr(_bb[i][0].get_text()[:25]),repr(_bb[j][0].get_text()[:25]))
-fig.savefig(os.path.join(_ROOT,'outputs','day04_final_v4.png'),dpi=100,facecolor=PARCH)
-from PIL import Image;Image.open(os.path.join(_ROOT,'outputs','day04_final_v4.png')).resize((1200,1500),Image.LANCZOS).save(os.path.join(_ROOT,'outputs','day04_final_v4_1200.png'))
+fig.savefig(os.path.join(_SCRATCH,'day04_final_v4.png'),dpi=100,facecolor=PARCH)
+from PIL import Image;Image.open(os.path.join(_SCRATCH,'day04_final_v4.png')).resize((1200,1500),Image.LANCZOS).save(os.path.join(_SCRATCH,'day04_final_v4_1200.png'))
 print(tot,ob,nl,len(a))
 
 print('PLACED',sorted(t.get_text() for t in ax.texts if t.get_text().startswith('†')))

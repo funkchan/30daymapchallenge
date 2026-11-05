@@ -1,7 +1,7 @@
 # Day 4 (Clusters): Graveyards of the Atlantic, US shipwreck clusters
 
 ## FINAL: v6 (`scripts/render_h.py` → `outputs/day04_v6.png`, `outputs/day04_v6_1200.png`)
-Skull-and-crossbones outlier marks (`glyphs/skulls_gd/`, 20 px, ink ≤200 m, bone beyond). The Chesapeake inset is shaded by water depth (CRM 3″) with 5/10/20 m isobaths. The callout is shorter. The key shows the four ship tiers. Crops: `outputs/day04_v6_crop_hatteras.png`, `outputs/day04_v6_crop_inset.png`, `outputs/day04_v6_crop_key.png`, and `outputs/day04_v6_preview600.png`. Earlier renders are not in the repo. `scripts/render_e.py` (v4) and `scripts/render_f.py` (no inset) are kept for reference; their PNGs are not committed.
+Skull-and-crossbones outlier marks (`glyphs/skulls_gd/`, 20 px, ink ≤200 m, bone beyond). The Chesapeake inset is shaded by water depth (CRM 3″) with 5/10/20 m isobaths. The callout is shorter. The key shows the four ship tiers. Crops: `outputs/day04_v6_crop_hatteras.png`, `outputs/day04_v6_crop_inset.png`, `outputs/day04_v6_crop_key.png`, and `outputs/day04_v6_preview600.png`. Earlier renders are not in the repo. `scripts/render_e.py` (v4), `scripts/render_f.py` (no inset) and `scripts/render_h.py` are kept. A rerun writes under `outputs/scratch/`, which is gitignored, so it does not replace the committed v6 images.
 
 ## Local data
 `data/` is gitignored. Land comes from this folder's own Natural Earth 10m land shapefile, `data/ne_10m_land.shp` (public domain). Download it locally:
@@ -43,7 +43,7 @@ Glyph generators stay next to their art: `glyphs/make_glyphs.py` and `glyphs/sku
 - The caption, methods replies and alt text are in `caption.md`. Sources are in `SOURCES_AND_CREDITS.md`.
 
 ## Pipeline
-1. `scripts/fetch.py`: ENC Direct wreck points. The AWOIS 2016 snapshot comes from the Library of Congress archive.
+1. `scripts/fetch.py`: ENC Direct wreck points, written to `data/<band>_<layer>.geojson` (gitignored). The AWOIS 2016 snapshot comes from the Library of Congress archive.
 2. `scripts/merge_cluster.py`:
    - Merges ENC coastal wrecks, ENC general wrecks more than 1 km from coastal, and AWOIS records more than 1 km from ENC.
    - Lower 48 total: 8,226.

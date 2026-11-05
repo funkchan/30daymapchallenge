@@ -2,6 +2,8 @@ import os,sys
 _ROOT=os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)),'..'))
 os.chdir(_ROOT)
 sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
+_SCRATCH=os.path.join(_ROOT,'outputs','scratch')
+os.makedirs(_SCRATCH,exist_ok=True)
 import matplotlib.patheffects as pe
 import matplotlib.transforms as mt
 ARROW=os.environ.get('ARROW','1')=='1'
@@ -345,8 +347,8 @@ for _k in range(60):
 fig.canvas.draw();b_=_vb.get_window_extent();print('VB gap to frame px',round(_r0[1]-b_.y1,1),'top',b_.y1,'frame',_r0[1])
 # inset tight-cluster box vs galleon/badge
 _cbb=_co.get_bbox_patch().get_window_extent();_ap_=ax.transData.transform(np.c_[pts.geometry.x,pts.geometry.y]);print('SCATTERED box covers marks',int(((_ap_[:,0]>_cbb.x0)&(_ap_[:,0]<_cbb.x1)&(_ap_[:,1]>_cbb.y0)&(_ap_[:,1]<_cbb.y1)).sum()))
-fig.savefig(os.path.join(_ROOT,'outputs',f"day04_v6_{'arrow' if ARROW else 'noarrow'}.png"),dpi=100,facecolor=PARCH)
-from PIL import Image;_f=os.path.join(_ROOT,'outputs',f"day04_v6_{'arrow' if ARROW else 'noarrow'}.png");Image.open(_f).resize((1200,1500),Image.LANCZOS).save(_f.replace('.png','_1200.png'))
+fig.savefig(os.path.join(_SCRATCH,f"day04_v6_{'arrow' if ARROW else 'noarrow'}.png"),dpi=100,facecolor=PARCH)
+from PIL import Image;_f=os.path.join(_SCRATCH,f"day04_v6_{'arrow' if ARROW else 'noarrow'}.png");Image.open(_f).resize((1200,1500),Image.LANCZOS).save(_f.replace('.png','_1200.png'))
 print(tot,ob,nl,len(a))
 
 _sk=_SKB();_cl=[]

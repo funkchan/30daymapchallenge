@@ -2,6 +2,8 @@ import os,sys
 _ROOT=os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)),'..'))
 os.chdir(_ROOT)
 sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
+_SCRATCH=os.path.join(_ROOT,'outputs','scratch')
+os.makedirs(_SCRATCH,exist_ok=True)
 import matplotlib.transforms as mt
 from pirate import *
 W,H=2400,3000;fig=plt.figure(figsize=(24,30),dpi=100);fig.patch.set_facecolor(PARCH)
@@ -205,8 +207,8 @@ for t in ax.texts:
         if k: print('BOX COVERS',k,repr(t.get_text()[:20]))
 cx,cy=ax.transAxes.transform((cb[1],cb[2]));r=.07*axb.width
 print('compass covers',(np.hypot(px[:,0]-cx,px[:,1]-cy)<r).sum())
-fig.savefig(os.path.join(_ROOT,'outputs','day04_v4_noinset.png'),dpi=100,facecolor=PARCH)
-from PIL import Image;Image.open(os.path.join(_ROOT,'outputs','day04_v4_noinset.png')).resize((1200,1500),Image.LANCZOS).save(os.path.join(_ROOT,'outputs','day04_v4_noinset_1200.png'))
+fig.savefig(os.path.join(_SCRATCH,'day04_v4_noinset.png'),dpi=100,facecolor=PARCH)
+from PIL import Image;Image.open(os.path.join(_SCRATCH,'day04_v4_noinset.png')).resize((1200,1500),Image.LANCZOS).save(os.path.join(_SCRATCH,'day04_v4_noinset_1200.png'))
 print(tot,ob,nl,len(a))
 
 print('PLACED',sorted(t.get_text() for t in ax.texts if t.get_text().startswith('†')))

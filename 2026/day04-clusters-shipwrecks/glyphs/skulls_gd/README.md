@@ -1,13 +1,12 @@
 # Day 4 outlier marks: skull and crossbones (glyphs_gd)
 
-Original mark, built from circles, rounded rects and buffered lines (shapely), then exported as one flat path. Nothing is traced or taken from any reference map. Regenerate everything with `python3 make_skulls.py` (cairosvg). Earlier renders are kept as `_old-20261104`.
+Original mark, built from circles, rounded rects and buffered lines (shapely), then exported as one flat path. Nothing is traced or taken from any reference map. Regenerate the committed marks with `python3 make_skulls.py` (cairosvg). If a file is already there, the script renames it aside before writing. Those backups are not in the repo.
 
 ## Files
 | File | What |
 |---|---|
 | `skull_ink.svg`, `skull_ink_20.png`, `skull_ink_40.png`, `skull_ink_128.png` | ink `#17120E`, single fill, transparent sockets, nose and teeth |
 | `skull_bone.svg`, `skull_bone_20.png`, `skull_bone_40.png`, `skull_bone_128.png` | bone `#F1E4C3` over an ink halo at 65% (0.9 viewBox units, ~0.75 px at 20 px); sockets read dark |
-| `option_B_*.svg`, `option_C_*.svg` | explored alternatives, not used |
 | `proof.png` | backgrounds at 1× and 1200-equivalent, ×4 zooms, density patch, design comparison, contrast |
 | `make_skulls.py` | source |
 
@@ -47,7 +46,7 @@ On deep water, bone against its composited halo (`#282C2B`) is 11.19:1, and the 
 - The skull has no red, no plus and no hull. Cluster marks are oxblood `+` and the ships are horizontal hulls with smoke or fire, so the three differ in colour, shape and orientation (see the density patch in proof.png).
 
 ## Ship tiers
-- **Unchanged.** `../glyphs/wreck_t1–t4` have no skulls or flags, so there's no clash. They're still valid with anchor (0.5, 0.78125).
+- **Unchanged.** `../wreck_t1.svg` through `../wreck_t4.svg` have no skulls or flags, so there's no clash. They're still valid with anchor (0.5, 0.78125).
 
 ## Caveats
 - I estimated the spacing from the Hatteras crop rather than from the point data.

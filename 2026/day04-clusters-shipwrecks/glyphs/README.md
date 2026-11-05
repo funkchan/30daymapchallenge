@@ -5,13 +5,11 @@ Flat, hand-built SVG: no gradients, filters or blur. Each tier has a transparent
 ## Files
 | File | What |
 |---|---|
-| `wreck_t1.svg/.png` … `wreck_t4.svg/.png` | glyphs |
-| `contact_sheet.png` | every tier at 512, 128 and 40 px on parchment, plus 40 px on mid-tone parchment over a coastline |
-| `type_specimen.png` / `specimen.html` | title + 12–14 px labels on parchment |
-| `make_glyphs.py`, `contact.py` | sources; `python3 make_glyphs.py && python3 contact.py` re-renders (cairosvg) |
+| `wreck_t1.svg` / `wreck_t1.png` … `wreck_t4.svg` / `wreck_t4.png` | glyphs |
+| `make_glyphs.py` | source; `python3 make_glyphs.py` re-renders the SVG and PNG (cairosvg) |
 | `fonts/` | the two TTFs plus their OFL texts |
 
-Replaced files are kept as `_old-20261104[b]`.
+If a glyph file is already there, `make_glyphs.py` renames it aside before writing. Those backups are not in the repo.
 
 ## Tiers
 All tiers share one hull silhouette (stern castle, raked bow, oxblood gunwale stripe, brass ports) and one bone wave base. The outline is 14 viewBox px on every tier.
@@ -52,7 +50,7 @@ To place a glyph of size S at a map point (x, y): `left = x − 0.5·S`, `top = 
   - T4: a red star burst
 
 ## Type pairing
-**Pirata One** for the title + **IM Fell English** for the labels (12–14 px is legible; see `type_specimen.png`).
+**Pirata One** for the title + **IM Fell English** for the labels (12–14 px is legible).
 - Pirata One: https://fonts.google.com/specimen/Pirata+One. SIL Open Font License 1.1.
 - IM Fell English: https://fonts.google.com/specimen/IM+Fell+English. SIL Open Font License 1.1.
 - IM Fell uses old-style figures. If label numbers need to line up, set them in Alegreya Sans (OFL) instead.
