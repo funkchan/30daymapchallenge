@@ -6,7 +6,7 @@ Drafts for funkchan to review and post himself. Nothing has been posted.
 Carto to Taco: real places shaped like taco ingredients. Wainwright, Alaska shell, Chonos beef, Iceland lettuce, Zadar cheese, Iowa tomato, La Pampa onion, Halmahera cilantro, Montalbán sour cream. Iceland is 768× bigger than its dollop.
 #30DayMapChallenge Day 3: Polygons
 ```
-Fun fact check: Iceland 102,361.8 km² / Montalbán 133.3 km² = 767.9×, computed in `18_final.py` from the equal-area geometry (`layout.json → true_scale_strip`).
+Fun fact check: Iceland 102,361.8 km² / Montalbán 133.3 km² = 767.9×, computed in `scripts/18_final.py` from the equal-area geometry (`layout.json → true_scale_strip`).
 
 ## Methods reply (two replies: 263 + 258 characters)
 ```
