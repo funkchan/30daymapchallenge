@@ -1,0 +1,21 @@
+rank,name,country,admin_level,area_km2,source,src_id,licence,score,iou_dome,aspect_tmpl,iou_decoy,margin,base_dev,arc_convexity,arc_monotone,arc_corner_share,width_to_height,n_vertices_simplified,best_rotation_ccw_deg
+1,"Wainwright city, Alaska",United States,place,37.3206,US Census cartographic boundary 2023 places 1:500k,0282750,public domain (US Census),1.0010,0.9717,2.0000,0.8158,0.1559,0.0722,1.0000,1.0000,0.1701,2.0151,35,126.2000
+2,Saint Lucy,BRB,ADM2,33.2329,geoBoundaries CGAZ ADM2,18249212B83355432632114,CC BY 4.0 (geoBoundaries),0.8633,0.9441,1.6000,0.8025,0.1415,0.0160,0.9828,0.4775,0.3212,1.6310,21,339.2000
+3,Leticia,COL,ADM2,6076.1634,geoBoundaries CGAZ ADM2,7082276B43275073099169,CC BY 4.0 (geoBoundaries),0.7394,0.9106,2.0000,0.7782,0.1324,0.0100,0.9635,0.1029,0.2015,2.1753,118,280.7000
+4,Inhapi,BRA,ADM2,373.8530,geoBoundaries CGAZ ADM2,56859067B78860328725040,CC BY 4.0 (geoBoundaries),0.7340,0.9200,1.6000,0.7942,0.1259,0.0061,0.9685,0.3266,0.3676,1.5134,16,46.8000
+5,São Bernardo,BRA,ADM2,1005.0940,geoBoundaries CGAZ ADM2,56859067B43626889758943,CC BY 4.0 (geoBoundaries),0.7314,0.8930,1.6000,0.7770,0.1161,0.0000,0.9205,0.2069,0.2497,1.4390,17,141.3000
+6,Vila do Bispo,PRT,ADM2,141.5795,geoBoundaries CGAZ ADM2,2272694B83396008352996,CC BY 4.0 (geoBoundaries),0.7310,0.8773,1.6000,0.7512,0.1261,0.0100,0.9922,0.4194,0.3679,1.7876,23,345.7000
+7,Madras,JAM,ADM2,26.4110,geoBoundaries CGAZ ADM2,35162164B17022445758631,CC BY 4.0 (geoBoundaries),0.7090,0.9192,2.0000,0.8369,0.0823,0.0000,0.9240,0.1519,0.2454,1.8704,37,103.2000
+8,"Clay County, North Carolina",United States,county,571.5549,US Census cartographic boundary 2023 counties 1:500k,37043,public domain (US Census),0.6993,0.9053,2.2000,0.7736,0.1317,0.0138,0.9151,0.0429,0.1823,2.5365,133,359.4000
+9,"Hillcrest CDP, California",United States,place,3.5728,US Census cartographic boundary 2023 places 1:500k,0633689,public domain (US Census),0.6841,0.8821,1.6000,0.8145,0.0676,0.0000,0.9560,0.1998,0.2543,1.6852,15,270.0000
+10,"Huron County, Michigan",United States,county,2166.2507,US Census cartographic boundary 2023 counties 1:500k,26063,public domain (US Census),0.6821,0.8974,1.6000,0.8104,0.0870,0.0329,0.9331,0.1326,0.2380,1.6742,100,356.0000
+11,"Parkman CDP, Ohio",United States,place,1.8612,US Census cartographic boundary 2023 places 1:500k,3959934,public domain (US Census),0.6726,0.9146,1.6000,0.8207,0.0938,0.0000,0.9393,0.2133,0.3368,1.5343,16,179.7000
+12,"Burke Centre CDP, Virginia",United States,place,8.2156,US Census cartographic boundary 2023 places 1:500k,5111470,public domain (US Census),0.6694,0.8684,2.0000,0.7860,0.0823,0.0353,0.9527,0.4125,0.3319,1.8812,28,185.6000
+13,"Scott County, Virginia",United States,county,1395.7218,US Census cartographic boundary 2023 counties 1:500k,51169,public domain (US Census),0.6692,0.8463,1.8000,0.7607,0.0856,0.0025,0.9580,0.1942,0.2495,1.9216,50,359.8000
+14,San Luis,HND,ADM2,123.0982,geoBoundaries CGAZ ADM2,27666195B17713094876682,CC BY 4.0 (geoBoundaries),0.6669,0.8959,1.6000,0.8292,0.0667,0.0401,0.9770,0.3436,0.3212,1.5952,28,199.6000
+15,"Worden CDP, Montana",United States,place,5.1352,US Census cartographic boundary 2023 places 1:500k,3081925,public domain (US Census),0.6638,0.8777,2.2000,0.8076,0.0701,0.0336,0.9536,0.1668,0.2163,2.2689,28,267.4000
+16,"Buffalo Prairie CDP, Illinois",United States,place,9.7467,US Census cartographic boundary 2023 places 1:500k,1709499,public domain (US Census),0.6601,0.8928,2.0000,0.7827,0.1101,0.0325,0.9207,0.2786,0.3490,2.1665,17,359.8000
+17,"Lowell Point CDP, Alaska",United States,place,30.5421,US Census cartographic boundary 2023 places 1:500k,0245295,public domain (US Census),0.6601,0.9131,1.6000,0.8097,0.1034,0.0471,0.9060,0.1390,0.2283,1.6540,48,90.9000
+18,Xaçmaz,Azerbaijan,admin-1,1329.7598,Natural Earth 10m admin-1,AZE-1730,public domain,0.6589,0.8686,2.2000,0.7881,0.0806,0.0305,0.9546,0.1511,0.2644,2.5104,43,232.4000
+19,Santa Ana del Valle,MEX,ADM2,27.9588,geoBoundaries CGAZ ADM2,50627088B45157986380633,CC BY 4.0 (geoBoundaries),0.6568,0.9175,1.6000,0.8397,0.0777,0.0000,0.9777,0.4351,0.4473,1.7151,13,114.1000
+20,"Randolph Town city, Massachusetts",United States,place,26.9578,US Census cartographic boundary 2023 places 1:500k,2556000,public domain (US Census),0.6541,0.8977,2.0000,0.7750,0.1227,0.0241,0.9417,0.2250,0.3807,2.0228,26,52.2000
